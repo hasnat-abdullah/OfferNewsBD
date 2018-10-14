@@ -11,41 +11,41 @@ def getauthor(request, name):
     return render(request, "dashboard.html")
 
 
-def getcategory(request, name):
+def getcategory(request):
     return render(request, "category.html")
 
 
-def getaboutus(request, id):
+def getaboutus(request):
     return render(request, "about-us.html")
 
 
-def getcontact(request, id):
+def getcontact(request):
     return render(request, "contact.html")
 
 
-def getsignin(request, name):
+def getsignin(request):
     return render(request, "signin.html")
 
 
-def getsignup(request, name):
+def getsignup(request):
     return render(request, "signup.html")
 
 
 def getsinglecoupon(request, name):
-    return render(request, "dashboard.html")
+    return render(request, "single-coupon-code.html")
 
 
 def getsingledeal(request, name):
-    return render(request, "dashboard.html")
+    return render(request, "single-coupon-sale.html")
 
 
 def getsinglestore(request, name):
-    return render(request, "dashboard.html")
+    return render(request, "single-store.html")
 
 
-def getstore(request, name):
-    return render(request, "dashboard.html")
+def getstore(request):
+    return render(request, "stores.html")
 
 
-def getsubmition(request, name):
-    return render(request, "dashboard.html")
+def getsubmition(request):
+    return render(request, "submit-coupon.html")
