@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import datetime
 
 
 # Coding By Abdullah on 8/10/2018
@@ -10,7 +11,7 @@ class Profile (models.Model):
     email = models.EmailField(unique=True)
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
-    userPic = models.ImageField(default='defaultProPic.jpg', upload_to='pro_pics', blank=True)
+    userPic = models.ImageField(default='default', upload_to='pro_pics', blank=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -22,7 +23,7 @@ class Company (models.Model):
     comAddress = models.TextField(max_length=200)
     comPhn = models.CharField(max_length=12)
     comWeb = models.CharField(max_length=50, blank=True)
-    comImage = models.ImageField(default='defaultProPic.jpg', upload_to='com_pics', blank=True)
+    comImage = models.ImageField(default='default.jpg', upload_to='com_pics', blank=True)
     AuthorId = models.ForeignKey(User, on_delete=models.CASCADE)
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
@@ -45,7 +46,7 @@ class Branch(models.Model):
 
 class Category(models.Model):
     catName = models.CharField(max_length=20)
-    catIcon = models.FileField(default='defaultProPic.jpg', upload_to='cat_pics', blank=True)
+    catIcon = models.FileField(default='default.jpg', upload_to='cat_pics', blank=True)
 
     def __str__(self):
         return self.catName
@@ -58,7 +59,7 @@ class Post(models.Model):
     TAKA = 'T'
     GIFT = 'G'
 
-    Deal_Type = (
+    Offer_Type = (
         (DEAL, 'Deal'),
         (COUPON, 'Coupon'),
     )
@@ -72,7 +73,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     comName = models.ForeignKey(Company, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    dealType = models.CharField(max_length=1, choices=Deal_Type, default=DEAL)
+    offerType = models.CharField(max_length=1, choices=Offer_Type, default=DEAL)
     AmountType = models.CharField(max_length=1, choices=Amount_Type, default=PERCENTAGE)
     Amount = models.CharField(max_length=200)
     postImage = models.ImageField(default='default.jpg', upload_to='post_pics', blank=True)

@@ -52,7 +52,7 @@ admin.site.register(Coupon, CouponModel)
 
 
 class PostModel(admin.ModelAdmin):
-    list_display = ["__str__", "postedOn", "comName", "category", "dealType", "isActive", "expiredOn",]
+    list_display = ["__str__", "postedOn", "comName", "category", "offerType", "isActive", "expiredOn",]
     search_fields = ["__str__"]
     list_filter = ["postedOn", "category"]
     list_per_page = 30

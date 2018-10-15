@@ -12,8 +12,8 @@ urlpatterns = [
     path('contact/', views.getcontact, name="contact"),
     path('store/', views.getstore, name="store"),
     path('submit/', views.getsubmition, name="submit"),
-    path('deal/<name>', views.getsingledeal, name="deal"),
-    path('coupon/<name>', views.getsinglecoupon, name="coupon"),
+    path('deal/<int:id>', views.getsingledeal, name="deal"),
+    path('coupon/<int:id>', views.getsinglecoupon, name="coupon"),
     path('offer/', views.getcategory, name="offer"),
-    path('store/<name>', views.getsinglestore, name="singleStore"),
+    path('store/<int:id>', views.getsinglestore, name="singleStore"),
 ]
