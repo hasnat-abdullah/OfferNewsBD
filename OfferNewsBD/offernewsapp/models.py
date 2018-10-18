@@ -116,7 +116,7 @@ class Featured(models.Model):
         (FEATURE_COMPANY, 'Feature_Company'),
     )
     featuredType = models.CharField(max_length=2, choices=Featured_Type, default=FEATURE_POST)
-    postId = models.ForeignKey(Post, on_delete=models.CASCADE)
+    postId = models.OneToOneField(Post, on_delete=models.CASCADE)
     featuredExpireDate = models.DateField()
     featuredDate = models.DateField(auto_now=False, auto_now_add=True)
     isActive = models.BooleanField(default=True)

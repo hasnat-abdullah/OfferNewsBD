@@ -19,103 +19,17 @@
                         <div class="widget widget-couponz-category-filter">
 
                             <ul>
+                                {% for c in cat %}
                                 <li>
                                     <a href="#">
                                         <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/001-smartphone.png" alt="" class="">
+                                            <img src="{{ c.catIcon.url }}" alt="" class="">
                                         </div>
 
-                                        <span>Smartphone</span>
+                                       <p><span>{{ c.catName }}</span></p>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/002-engagement-ring.png" alt="" class="">
-                                        </div>
-                                        <span>Jewellery</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/003-furniture.png" alt="" class="">
-                                        </div>
-                                        <span>Furniture</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/004-lemonade.png" alt="" class="">
-                                        </div>
-                                        <span>Food &amp; Beverage</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/005-home.png" alt="" class="">
-                                        </div>
-                                        <span>Home &amp; Decor</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/006-stationary-bicycle.png" alt="" class="">
-                                        </div>
-                                        <span>Fitness Equipmect</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/008-calendar.png" alt="" class="">
-                                        </div>
-                                        <span>Events</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/009-headphones.png" alt="" class="">
-                                        </div>
-                                        <span>Electronic</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/010-shirt.png" alt="" class="">
-                                        </div>
-                                        <span>Lifestyle</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/011-lipstick.png" alt="" class="">
-                                        </div>
-                                        <span>Beauty</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/012-transport.png" alt="" class="">
-                                        </div>
-                                        <span>Travel</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="category-thumb">
-                                            <img src="assets/img/coupon-category/007-weightlifting.png" alt="" class="">
-                                        </div>
-                                        <span>Online Store</span>
-                                    </a>
-                                </li>
+                                {%  endfor %}
                             </ul>
 
                         </div>
@@ -198,9 +112,10 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <!-- Deal Single Item Start -->
+                        {% for p in post %}
                             <div class="item deal-item">
                                 <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x383" alt="" class="img-responsive">
+                                    <img src="{{ p.postImage.url }}" alt="" class="img-responsive">
                                     <div class="deal-badge">
                                         87%
                                     </div>
@@ -212,412 +127,28 @@
 
                                 </div>
                                 <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
+                                    <h6><a href="
+                                {% if p.offerType == 'D' %}
+                                    {%  url 'deal' id=p.id %}
+                                {% else %}
+                                    {%  url 'coupon' id=p.id %}
+                                {% endif %}">
+                                        {{ p.title }}</a></h6>
+                                    <p>{{ p.description }}</p>
                                     <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
+                                        <p><i class="fa fa-clock-o"></i> Expired: {{p.expiredOn}}</p>
+                                        <a href="
+                                {% if p.offerType == 'D' %}
+                                    {%  url 'deal' id=p.id %}
+                                {% else %}
+                                    {%  url 'coupon' id=p.id %}
+                                {% endif %}"
+                                             class="btn btn-sm">Get It</a>
                                     </div>
                                 </div>
                             </div>
                             <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x338" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x391" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                            <div class="item deal-item">
-                                <div class="deal-thumb">
-                                    <img src="http://placehold.it/600x401" alt="" class="img-responsive">
-                                    <div class="deal-badge">
-                                        87%
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-                                            <span class="popOver" data-toggle="tooltip" data-placement="top" title="45%"> </span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="deal-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="deal-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Get It</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Deal Single Item End -->
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Coupon Single Item Start -->
-                            <div class="item coupon-item">
-                                <div class="coupon-thumb">
-                                    <img src="http://placehold.it/600x400" alt="" class="img-responsive">
-                                    <div class="coupon-badge">
-                                        87%
-                                    </div>
-                                    <a href="#" class="btn btn-brand">View Coupon</a>
-                                </div>
-                                <div class="coupon-content">
-                                    <h6><a href="#">Special Flash Sale </a></h6>
-                                    <p>Get 87% discount, on every single categories, so hurry up.....</p>
-                                    <div class="coupon-content-bottom">
-                                        <p><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
-                                        <a href="#" class="btn btn-sm">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Coupon Single Item End -->
+                        {%  endfor %}
                         </div>
                     </div>
 

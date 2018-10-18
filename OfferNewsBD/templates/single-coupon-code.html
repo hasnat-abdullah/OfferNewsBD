@@ -10,12 +10,12 @@
             <div class="row">
                 <div class="col-md-3 col-xs-12">
                     <div class="single-coupon-thumb">
-                        <img src="http://placehold.it/600x400" alt="Coupon" class="img-responsive">
+                        <img src="{{ coupon.postImage.url }}" alt="Coupon" class="img-responsive">
                     </div>
                     <div class="coupon-social">
                         <ul>
                             <li>
-                                <a href="#">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{  request.build_absolute_url }}">
                                     <i class="fa fa-facebook"></i>
                                 </a>
                             </li>
@@ -39,9 +39,9 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="single-coupon-content">
-                        <h5>Special Flash Sale</h5>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        <p class="expiring-time"><span class="btn btn-brand coupon-type">Code</span><i class="fa fa-clock-o"></i> 0 days, 0h Remaining</p>
+                        <h5>{{ coupon.title }}</h5>
+                        <p>{{ coupon.description }}</p>
+                        <p class="expiring-time"><span class="btn btn-brand coupon-type"><a href="">{{ coupon.comName }} </span><i class="fa fa-clock-o"></i> Expired on: {{coupon.expiredOn}}</p>
 
                     </div>
                 </div>
@@ -55,6 +55,73 @@
     </div>
     <!-- Single Coupon Wrapper End -->
 
+    <!-- Related Deal Section Start -->
+
+    <div class="new-deal-wrapper">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-10 col-xs-12">
+                    <h3 align="center" class="section-heading">Related Coupon</h3>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="new-deal-carousel" class="owl-carousel owl-theme new-deal-list">
+                        <!-- releted Single Item Start -->
+                        {% for r in related %}
+                            <div class="item deal-item">
+                            <div class="deal-thumb">
+
+                            <!-- Query for choosing right single page dea or coupon -->
+                                <a href="
+                                {% if r.offerType == 'D' %}
+                                    {%  url 'deal' id=r.id %}
+                                {% else %}
+                                    {%  url "coupon" id=r.id %}
+                                {% endif %}">
+                                    <img src="{{ r.postImage.url }}" alt="" class="img-responsive"></a>
+                                <div class="deal-badge">
+                                    87%
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                                        <span class="popOver" data-toggle="tooltip" data-placement="top" title="70%"> </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="deal-content">
+                                <h6><a href="
+                                {% if r.offerType == 'D' %}
+                                    {%  url 'deal' id=r.id %}
+                                {% else %}
+                                    {%  url 'coupon' id=r.id %}
+                                {% endif %}">
+                                    {{ r.title }} </a></h6>
+                                <p>{{ r.description }}</p>
+                                <div class="deal-content-bottom">
+                                    <p><i class="fa fa-clock-o"></i> Expired: {{r.expiredOn}}</p>
+                                    <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>
+                                </div>
+                            </div>
+                        </div>
+                        {%  endfor %}
+                        <!-- related Deal Single Item End -->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Releted Deal Section End -->
+
     
 <!-- Modal -->
 <div id="coupon-code" class="modal fade" role="dialog">
@@ -64,14 +131,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&#xD7;</button>
-                <h4 class="modal-title">Special Flash Sale</h4>
+                <h4 class="modal-title">{{ coupon.title }}</h4>
             </div>
             <div class="modal-body">
                 <div class="coupon-modal-content">
                     <div class="row">
                         <div class="col-md-5 col-sm-5 col-xs-12">
                             <div class="single-coupon-thumb">
-                                <img src="http://placehold.it/600x400" alt="Coupon" class="img-thumbnail img-responsive">
+                                <img src="{{ coupon.postImage.url }}" alt="Coupon" class="img-thumbnail img-responsive">
                             </div>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-12">
@@ -82,73 +149,7 @@
                                     <button class="clipboard btn btn-default" data-clipboard-text="HFRESH10"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy to Clipboard</button>
                                 </div>
                             </div>
-                            <a class="btn btn-brand pull-right" href="#">Go To Store</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <img src="http://placehold.it/1000x172" alt="Coupon" class="img-responsive">
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Modal -->
-<div id="coupon-printable" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&#xD7;</button>
-                <h4 class="modal-title">Special Flash Sale</h4>
-            </div>
-            <div class="modal-body">
-                <div class="coupon-modal-content">
-                    <div class="row">
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <div class="single-coupon-thumb">
-                                <img src="http://placehold.it/600x400" alt="Coupon" class="img-thumbnail img-responsive">
-                            </div>
-                        </div>
-                        <div class="col-md-7 col-sm-7 col-xs-12">
-                            <p>PRINT THIS COUPON AND REDEEM IT IN-STORE</p>
-                            <a class="btn btn-brand" href="#">Print Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <img src="http://placehold.it/1000x172" alt="Coupon" class="img-responsive">
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!-- Modal -->
-<div id="coupon-deal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&#xD7;</button>
-                <h4 class="modal-title">Special Flash Sale</h4>
-            </div>
-            <div class="modal-body">
-                <div class="coupon-modal-content">
-                    <div class="row">
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <div class="single-coupon-thumb">
-                                <img src="http://placehold.it/600x400" alt="Coupon" class="img-thumbnail img-responsive">
-                            </div>
-                        </div>
-                        <div class="col-md-7 col-sm-7 col-xs-12">
-                            <p>DEAL ACTIVATED, NO COUPON CODE REQUIRED!</p>
-                            <a class="btn btn-brand" href="#">Go To Store</a>
+                            <a class="btn btn-brand pull-right" href="{{  coupon.goingUrl }}" target="_blank" >Go To Store</a>
                         </div>
                     </div>
                 </div>
