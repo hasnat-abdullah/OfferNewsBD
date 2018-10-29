@@ -7,18 +7,34 @@ from django.utils.timezone import datetime
 
 class Profile (models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phn = models.CharField(max_length=12, unique=True)
-    email = models.EmailField(unique=True)
+    phn = models.CharField(db_index=True, max_length=12, unique=True)
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
     userPic = models.ImageField(default='default', upload_to='pro_pics', blank=True)
+    #slug = models.SlugField(max_length=80, unique=True, blank=False)
 
     def __str__(self):
         return f'{self.user.username} Profile'
 
 
+class UserAddress (models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    city = models.CharField(max_length=15)
+
+    def __str__(self):
+        return f'{self.user.city} UserAddress'
+
+
+class UserEmail (models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(db_index=True, unique=True)
+
+    def __str__(self):
+        return f'{self.user.email} UserEmail'
+
+
 class Company (models.Model):
-    comName = models.CharField(max_length=60, blank=False)
+    comName = models.CharField(db_index=True, max_length=60, blank=False)
     comDes = models.TextField()
     comAddress = models.TextField(max_length=200)
     comPhn = models.CharField(max_length=12)
@@ -28,6 +44,7 @@ class Company (models.Model):
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
     isVerified = models.BooleanField(blank=False)
+    #slug = models.SlugField(max_length=80, unique=True, blank=False)
 
     def __str__(self):
         return self.comName
@@ -39,7 +56,7 @@ class Branch(models.Model):
     branchAddress = models.TextField(max_length=200)
     branchPhn = models.CharField(max_length=12)
     comId = models.ForeignKey(Company, on_delete=models.CASCADE)
-
+    #slug = models.SlugField(max_length=80, unique=True, blank=False, default=True)
     def __str__(self):
         return self.branchName
 
@@ -68,11 +85,11 @@ class Post(models.Model):
         (TAKA, 'Taka'),
         (GIFT, 'Gift'),
     )
-    title = models.CharField(max_length=200)
+    title = models.CharField(db_index=True, max_length=200)
     description = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    comName = models.ForeignKey(Company, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    author = models.ForeignKey( User, db_index=True, on_delete=models.CASCADE)
+    comName = models.ForeignKey(Company, db_index=True, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, db_index=True, on_delete=models.CASCADE)
     offerType = models.CharField(max_length=1, choices=Offer_Type, default=DEAL)
     AmountType = models.CharField(max_length=1, choices=Amount_Type, default=PERCENTAGE)
     Amount = models.CharField(max_length=200)
@@ -83,14 +100,15 @@ class Post(models.Model):
     postedOn = models.DateTimeField(auto_now=False, auto_now_add=True)
     expiredOn = models.DateTimeField()
     editedOn = models.DateTimeField(auto_now=True, auto_now_add=False)
+    #slug = models.SlugField(max_length=80, unique=True, blank=False)
 
     def __str__(self):
         return self.title
 
 
 class Coupon(models.Model):
-    postId = models.ForeignKey(Post, on_delete=models.CASCADE)
-    couponCode = models.CharField(max_length=50)
+    postId = models.OneToOneField(Post, on_delete=models.CASCADE)
+    couponCode = models.CharField(db_index=True, max_length=50)
 
     def __str__(self):
         return self.couponCode
@@ -98,7 +116,7 @@ class Coupon(models.Model):
 
 class Contact(models.Model):
     name = models.CharField(max_length=40)
-    email = models.EmailField(max_length=50)
+    email = models.EmailField(db_index=True, max_length=50)
     subject = models.CharField(max_length=100)
     message = models.TextField()
     sendOn = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -116,10 +134,10 @@ class Featured(models.Model):
         (FEATURE_COMPANY, 'Feature_Company'),
     )
     featuredType = models.CharField(max_length=2, choices=Featured_Type, default=FEATURE_POST)
-    postId = models.OneToOneField(Post, on_delete=models.CASCADE)
+    postId = models.OneToOneField(Post, db_index=True, on_delete=models.CASCADE)
     featuredExpireDate = models.DateField()
     featuredDate = models.DateField(auto_now=False, auto_now_add=True)
-    isActive = models.BooleanField(default=True)
+    isActive = models.BooleanField(db_index=True, default=True)
     # price = models.ForeignKey(Pricing, on_delete=models.CASCADE)
 
     def __str__(self):

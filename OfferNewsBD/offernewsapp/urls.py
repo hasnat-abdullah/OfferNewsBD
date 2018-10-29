@@ -6,7 +6,7 @@ from django.contrib import admin
 urlpatterns = [
     path('', views.index, name="index"),
     path('user/<name>', views.getauthor, name="Dashboard"),
-    path('login', views.getsignin, name="login"),
+    path('login/', views.getsignin, name="login"),
     path('signup/', views.getsignup, name="signup"),
     path('logout', views.getlogout, name="logout"),
     path('about/', views.getaboutus, name="about"),

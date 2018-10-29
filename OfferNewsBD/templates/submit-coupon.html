@@ -52,9 +52,10 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <select id="coupon_type" name="coupon_type" class="form-control">
-                                                        <option value="code">Coupon Code</option>
+                                                        <option>Select Offer Type *</option>
+                                                        <option value="code">Coupon</option>
                                                         <option value="sale">Sale</option>
-                                                        <option value="print">Printable</option>
+                                                        <option value="gift">gift</option>
 
                                                     </select>
                                                 </div>
@@ -62,19 +63,25 @@
                                             </div>
                                             <div class="row" id="coupon_code_wrapper">
                                                 <div class="col-md-12">
-                                                    <input id="coupon_code" type="text" name="coupon_code" placeholder="Code" class="form-control" required aria-required="true">
+                                                    <input id="coupon_code" type="text" name="coupon_code" placeholder="Coupon Code" class="form-control" required aria-required="true">
                                                 </div>
 
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="text" name="coupon_image_url" placeholder="Image URL" class="form-control" required aria-required="true">
+                                                    <input type="text" name="Offer Amount" placeholder="Offer Amount" class="form-control" required aria-required="true">
                                                 </div>
 
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="text" name="coupon_aff_url" placeholder="Coupon Aff URL" class="form-control" required aria-required="true">
+                                                    <input type="file" name="offer_image" placeholder="Upload Offer Image" class="form-control" required aria-required="true">
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="text" name="coupon_aff_url" placeholder="Offer URL" class="form-control" required aria-required="false">
                                                 </div>
 
                                             </div>

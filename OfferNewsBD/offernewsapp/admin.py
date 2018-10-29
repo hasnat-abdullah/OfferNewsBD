@@ -1,17 +1,40 @@
 from django.contrib import admin
-from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, FeaturedPosition, Meta, Advertise
+from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, FeaturedPosition, Meta, Advertise, UserAddress, UserEmail
 
 # Register your models here.
 
 
 class ProfileModel(admin.ModelAdmin):
-    list_display = ["__str__","phn","email"]
+    list_display = ["__str__","phn"]
     search_fields = ["__str__"]
 
     class Meta:
         Model = Profile
 
+
 admin.site.register(Profile, ProfileModel)
+
+
+class UserAddressModel(admin.ModelAdmin):
+    list_display = ["__str__","city"]
+    search_fields = ["__str__"]
+
+    class Meta:
+        Model = UserAddress
+
+
+admin.site.register(UserAddress, UserAddressModel)
+
+
+class UserEmailModel(admin.ModelAdmin):
+    list_display = ["__str__","email"]
+    search_fields = ["__str__"]
+
+    class Meta:
+        Model = UserEmail
+
+
+admin.site.register(UserEmail, UserEmailModel)
 
 
 class CompanyModel(admin.ModelAdmin):
@@ -20,6 +43,7 @@ class CompanyModel(admin.ModelAdmin):
 
     class Meta:
         Model = Company
+
 
 admin.site.register(Company, CompanyModel)
 
@@ -30,6 +54,8 @@ class BranchModel(admin.ModelAdmin):
 
     class Meta:
         Model = Branch
+
+
 admin.site.register(Branch, BranchModel)
 
 
@@ -39,6 +65,8 @@ class CategoryModel(admin.ModelAdmin):
 
     class Meta:
         Model = Category
+
+
 admin.site.register(Category, CategoryModel)
 
 
@@ -48,6 +76,8 @@ class CouponModel(admin.ModelAdmin):
 
     class Meta:
         Model = Coupon
+
+
 admin.site.register(Coupon, CouponModel)
 
 
@@ -59,6 +89,8 @@ class PostModel(admin.ModelAdmin):
 
     class Meta:
         Model = Post
+
+
 admin.site.register(Post, PostModel)
 
 
@@ -68,6 +100,8 @@ class ContactModel(admin.ModelAdmin):
 
     class Meta:
         Model = Contact
+
+
 admin.site.register(Contact, ContactModel)
 
 
@@ -77,6 +111,8 @@ class FeaturedModel(admin.ModelAdmin):
 
     class Meta:
         Model = Featured
+
+
 admin.site.register(Featured, FeaturedModel)
 
 
@@ -86,6 +122,8 @@ class FeaturePricingModel(admin.ModelAdmin):
 
     class Meta:
         Model = FeaturePricing
+
+
 admin.site.register(FeaturePricing, FeaturePricingModel)
 
 
@@ -95,6 +133,8 @@ class AdPricingModel(admin.ModelAdmin):
 
     class Meta:
         Model = AdPricing
+
+
 admin.site.register(AdPricing, AdPricingModel)
 
 
@@ -104,6 +144,8 @@ class FeaturedPositionModel(admin.ModelAdmin):
 
     class Meta:
         Model = FeaturedPosition
+
+
 admin.site.register(FeaturedPosition, FeaturedPositionModel)
 
 
@@ -113,6 +155,8 @@ class MetaModel(admin.ModelAdmin):
 
     class Meta:
         Model = Meta
+
+
 admin.site.register(Meta, MetaModel)
 
 
@@ -122,4 +166,6 @@ class AdvertiseModel(admin.ModelAdmin):
 
     class Meta:
         Model = Advertise
+
+
 admin.site.register(Advertise, AdvertiseModel)

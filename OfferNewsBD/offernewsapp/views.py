@@ -1,6 +1,8 @@
 from django.shortcuts import render,HttpResponse, get_object_or_404, redirect
 from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, FeaturedPosition, Meta, Advertise
 from django.contrib.auth import authenticate, login, logout
+# from .forms import CreateForm
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
@@ -84,6 +86,7 @@ def getstore(request):
 
 
 def getsubmition(request):
+    #form = CreateForm()
     return render(request, "submit-coupon.html")
 
 
@@ -103,9 +106,12 @@ def getsignin(request):
 
 
 def getsignup(request):
+    # form = UserCreationForm(request.POST or None)
     return render(request, "signup.html")
 
 
 def getlogout(request):
     logout(request)
     return redirect('index')
+
+
