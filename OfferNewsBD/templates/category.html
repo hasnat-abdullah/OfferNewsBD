@@ -108,11 +108,12 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Deal Single Item Start -->
                 <div class="col-md-9">
                     <div class="row">
+                    {% for p in post %}
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                            <!-- Deal Single Item Start -->
-                        {% for p in post %}
                             <div class="item deal-item">
                                 <div class="deal-thumb">
                                     <img src="{{ p.postImage.url }}" alt="" class="img-responsive">
@@ -147,23 +148,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Deal Single Item End -->
-                        {%  endfor %}
                         </div>
+                        {%  endfor %}
                     </div>
+                <!-- Deal Single Item End -->
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="pagination-wrapper">
-    <ul class="pagination">
+
+     <!--Pagination starts-->
+     <ul class="pagination">
+    {% if post.has_previous %}
+        <li><a href="?page={{ post.previous_page_number }}"><i class="fa fa-angle-left"></i>Previous</a></li>
+    {% else %}
         <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i>Previous</a></li>
+    {% endif %}
+
+    {% for i in paginator.page_range %}
+    {% if post.number == i %}
         <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#"> Next<i class="fa fa-angle-right"></i></a></li>
+    {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+
+    {% if poat.has_next %}
+        <li><a href="?page={{ post.next_page_number }}"> Next<i class="fa fa-angle-right"></i></a></li>
+    {% else %}
+        <li class="disabled"><a href="#"> Next<i class="fa fa-angle-right"></i></a></li>
+    {% endif %}
     </ul>
+    <!--Pagination Ends-->
+
 </div>
                         </div>
                     </div>

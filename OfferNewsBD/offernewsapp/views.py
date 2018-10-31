@@ -1,16 +1,18 @@
 from django.shortcuts import render,HttpResponse, get_object_or_404, redirect
 from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, FeaturedPosition, Meta, Advertise
 from django.contrib.auth import authenticate, login, logout
-# from .forms import CreateForm
+from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+#from .forms import CreateForm
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
 def index(request):
-    post = Post.objects.filter(isActive=True).order_by('-postedOn')[:8]
-    featuredpost = Post.objects.filter(isActive=True, isFeatured=True).order_by('-postedOn')[:8]
-    couponpost = Featured.objects.filter(isActive=True).order_by('?')[:1]
-    store = Company.objects.all().order_by('-createdOn')[:8]
+    post = Post.objects.filter(isActive=True).order_by('-postedOn')
+    featuredpost = Post.objects.filter(isActive=True, isFeatured=True).order_by('-postedOn')
+    couponpost = Featured.objects.filter(isActive=True).order_by('?')
+    store = Company.objects.all().order_by('-createdOn')
     context={
         'post':post,
         'store':store,
@@ -40,8 +42,13 @@ def getalloffer(request):
     deal = Post.objects.filter(isActive=True, offerType='D').order_by('-postOn')
     cat = Category.objects.all()
 
+    # ==========Paginator==========
+    paginator = Paginator(post, 12)  # Show 12 contacts per page
+
+    page = request.GET.get('page')
+    totalArticle = paginator.get_page(page)
     context = {
-        'post': post,
+        'post': totalArticle,
         'coupon':coupon,
         'deal':deal,
         'cat':cat,
@@ -89,7 +96,7 @@ def getsubmition(request):
     #form = CreateForm()
     return render(request, "submit-coupon.html")
 
-
+#Login Function
 def getsignin(request):
     if request.user.is_authenticated:
         return redirect('index')
@@ -101,6 +108,8 @@ def getsignin(request):
             if auth is not None:
                 login(request, auth)
                 return redirect('index')
+            else:
+                messages.add_message(request,messages.ERROR, "Username or Password Mismatch")
 
     return render(request, "signin.html")
 

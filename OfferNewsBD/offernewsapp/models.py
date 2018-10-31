@@ -7,7 +7,7 @@ from django.utils.timezone import datetime
 
 class Profile (models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phn = models.CharField(db_index=True, max_length=12, unique=True)
+    phn = models.CharField(db_index=True, max_length=11, unique=True)
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
     userPic = models.ImageField(default='default', upload_to='pro_pics', blank=True)
@@ -37,8 +37,8 @@ class Company (models.Model):
     comName = models.CharField(db_index=True, max_length=60, blank=False)
     comDes = models.TextField()
     comAddress = models.TextField(max_length=200)
-    comPhn = models.CharField(max_length=12)
-    comWeb = models.CharField(max_length=50, blank=True)
+    comPhn = models.CharField(max_length=11)
+    comWeb = models.CharField(max_length=42, blank=True)
     comImage = models.ImageField(default='default.jpg', upload_to='com_pics', blank=True)
     AuthorId = models.ForeignKey(User, on_delete=models.CASCADE)
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
@@ -54,7 +54,7 @@ class Branch(models.Model):
     branchName = models.CharField(max_length=20)
     managerId = models.ForeignKey(User, on_delete=models.CASCADE)
     branchAddress = models.TextField(max_length=200)
-    branchPhn = models.CharField(max_length=12)
+    branchPhn = models.CharField(max_length=11)
     comId = models.ForeignKey(Company, on_delete=models.CASCADE)
     #slug = models.SlugField(max_length=80, unique=True, blank=False, default=True)
     def __str__(self):
@@ -100,7 +100,7 @@ class Post(models.Model):
     postedOn = models.DateTimeField(auto_now=False, auto_now_add=True)
     expiredOn = models.DateTimeField()
     editedOn = models.DateTimeField(auto_now=True, auto_now_add=False)
-    #slug = models.SlugField(max_length=80, unique=True, blank=False)
+    # slug = models.SlugField(max_length=80, unique=True, blank=False)
 
     def __str__(self):
         return self.title
@@ -116,10 +116,10 @@ class Coupon(models.Model):
 
 class Contact(models.Model):
     name = models.CharField(max_length=40)
-    email = models.EmailField(db_index=True, max_length=50)
+    phn = models.CharField(db_index=True, blank=False, max_length=11, default=1)
     subject = models.CharField(max_length=100)
     message = models.TextField()
-    sendOn = models.DateTimeField(auto_now=False, auto_now_add=True)
+    sendOn = models.DateTimeField(db_index=True, auto_now=False, auto_now_add=True)
 
     def __str__(self):
         return self.name

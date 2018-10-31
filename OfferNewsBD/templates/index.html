@@ -376,16 +376,16 @@
             </div>
         </div>
 
-{% for s in store %}
         <!-- Top Store List Logo Start -->
         <div class="row">
+            {% for s in store %}
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="single-top-store">
                     <a href="{%  url 'singleStore' id=s.id %}"><img src="{{ s.comImage.url }}" alt="Top Store" class="img-responsive"></a>
                 </div>
             </div>
+            {%  endfor %}
         </div>
-{%  endfor %}
         <!-- Top Store List Logo End -->
     </div>
 </div>
