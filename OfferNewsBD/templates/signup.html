@@ -21,30 +21,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="post-comment-form-group">
-                                        <form action="#" method="post">
+                                        <form action="" method="POST">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="text" name="name" placeholder="Name*" class="form-control" required aria-required="true">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="number" name="mobile number" placeholder="mobile number*" class="form-control" required aria-required="true">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="email" name="email" placeholder="Email*" class="form-control" required aria-required="true">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="password" name="password" placeholder="Password*" class="form-control" required aria-required="true">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="submit" value="Sign Up" class="btn btn-block btn-brand btn-lg">
+                                                    <button class="btn btn-block btn-brand btn-lg">Sign up</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -67,7 +50,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="askAccount-wrapper text-center">
-                                        <a href="{%  url 'signup' %}">Register</a>
+                                        <a href="{%  url 'login' %}">Have an account? Login</a>
                                     </div>
                                 </div>
                             </div>
@@ -83,5 +66,10 @@
 {% endblock %}
 
 {% block script %}
-
-    {% endblock %}
+    <script>
+    $(document).ready(function(){
+        $("#id_password1").addClass("form-control").attr("placeholder","Enter password");
+        $("#id_password2").addClass("form-control").attr("placeholder","Confirm password");
+    });
+    </script>
+{% endblock %}

@@ -15,7 +15,7 @@ urlpatterns = [
     path('submit/', views.getsubmition, name="submit"),
     path('deal/<int:id>', views.getsingledeal, name="deal"),
     path('coupon/<int:id>', views.getsinglecoupon, name="coupon"),
-    path('<name>', views.getcategory, name="category"),
+    #path('<name>', views.getcategory, name="category"),
     path('offer/', views.getalloffer, name="offer"),
     path('store/<int:id>', views.getsinglestore, name="singleStore"),
 ]

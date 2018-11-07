@@ -1,10 +1,14 @@
-from django.shortcuts import render,HttpResponse, get_object_or_404, redirect
-from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, FeaturedPosition, Meta, Advertise
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, \
+    FeaturedPosition, Meta, Advertise
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-#from .forms import CreateForm
-from django.contrib.auth.forms import UserCreationForm
+from .forms import ContactForm, SignUpForm
+from django.contrib.auth.models import User
+
+
+# from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
@@ -13,10 +17,10 @@ def index(request):
     featuredpost = Post.objects.filter(isActive=True, isFeatured=True).order_by('-postedOn')
     couponpost = Featured.objects.filter(isActive=True).order_by('?')
     store = Company.objects.all().order_by('-createdOn')
-    context={
-        'post':post,
-        'store':store,
-        'featuredpost':featuredpost,
+    context = {
+        'post': post,
+        'store': store,
+        'featuredpost': featuredpost,
         'couponpost': couponpost,
     }
     return render(request, "index.html", context)
@@ -27,18 +31,18 @@ def getauthor(request, name):
 
 
 def getcategory(request, name):
-    cat=get_object_or_404(Category, catName=name)
-    post=Post.objects.filter(category=cat.id)
+    cat = get_object_or_404(Category, catName=name)
+    post = Post.objects.filter(category=cat.id)
     context = {
         'post': post,
-        'cat':cat,
+        'cat': cat,
     }
-    return render(request, "category.html",context)
+    return render(request, "category.html", context)
 
 
 def getalloffer(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')[:18]
-    coupon= Post.objects.filter(isActive=True, offerType='C' ).order_by('-postOn')
+    coupon = Post.objects.filter(isActive=True, offerType='C').order_by('-postOn')
     deal = Post.objects.filter(isActive=True, offerType='D').order_by('-postOn')
     cat = Category.objects.all()
 
@@ -49,11 +53,11 @@ def getalloffer(request):
     totalArticle = paginator.get_page(page)
     context = {
         'post': totalArticle,
-        'coupon':coupon,
-        'deal':deal,
-        'cat':cat,
+        'coupon': coupon,
+        'deal': deal,
+        'cat': cat,
     }
-    return render(request, "category.html",context)
+    return render(request, "category.html", context)
 
 
 def getaboutus(request):
@@ -61,15 +65,26 @@ def getaboutus(request):
 
 
 def getcontact(request):
-    return render(request, "contact.html")
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        name = request.POST.get('name')
+        phn = request.POST.get('phn')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        form = form(name=name, phn=phn, subject=subject, message=message, )
+        form.save()
+        messages.add_message(request, messages.SUCCESS, "Your message sent successfully.")
+
+    return render(request, "contact.html", {"form": form})
 
 
 def getsinglecoupon(request, id):
-    coupon=get_object_or_404(Post, pk=id)
+    coupon = get_object_or_404(Post, pk=id)
     related = Post.objects.filter(category=coupon.category).exclude(id=id)[:4]
-    context={
-        'coupon':coupon,
-        'related':related,
+    context = {
+        'coupon': coupon,
+        'related': related,
     }
     return render(request, "single-coupon-code.html", context)
 
@@ -93,10 +108,11 @@ def getstore(request):
 
 
 def getsubmition(request):
-    #form = CreateForm()
+    # form = CreateForm()
     return render(request, "submit-coupon.html")
 
-#Login Function
+
+# Login Function
 def getsignin(request):
     if request.user.is_authenticated:
         return redirect('index')
@@ -109,18 +125,36 @@ def getsignin(request):
                 login(request, auth)
                 return redirect('index')
             else:
-                messages.add_message(request,messages.ERROR, "Username or Password Mismatch")
+                messages.add_message(request, messages.ERROR, "Username or Password Mismatch")
 
     return render(request, "signin.html")
 
 
 def getsignup(request):
-    # form = UserCreationForm(request.POST or None)
-    return render(request, "signup.html")
+    if request.method == "GET":
+        form = SignUpForm(request.POST or None)
+        return render(request, "signup.html", {"form": form})
+    else:
+        form = SignUpForm(request.POST)
+        first_name = request.POST.get("first_name")
+        first_name=first_name.lower()
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.is_active = True
+            usr = User.objects.all()
+            i = 0
+            for u in usr:
+                if u.username == first_name + str(i) or u.username == first_name:
+                    i = i + 1
+                else:
+                    pass
+            instance.username = first_name + str(i)
+            instance.save()
+            return HttpResponse("You are registered with username: "+first_name+str(i)+". Click <a href='/login'>here</a> to login")
+        else:
+            return redirect("signup")
 
 
 def getlogout(request):
     logout(request)
     return redirect('index')
-
-
