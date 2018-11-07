@@ -23,24 +23,37 @@
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="post-comment-form-group">
-                                        <form action="#" method="post" id="cbx-contact-form">
+
+                                        <!--Error Notification start-->
+                                         {% if messages %}
+                                         <div class="messages">
+                                             {% for message in messages %}
+                                             <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+                                             {% endfor %}
+                                         </div>
+                                         {% endif %}
+                                         <!--Error Notification End-->
+
+                                         <form action="" method="POST" id="cbx-contact-form">
+                                             {% csrf_token %}
+
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <input type="text" name="cbxname" placeholder="Name*" class="form-control" required aria-required="true">
+                                                    <input type="text" name="name" id="name" placeholder="Name*" class="form-control" required aria-required="true">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="email" name="cbxemail" placeholder="Email*" class="form-control" required aria-required="true">
+                                                    <input type="number" name="phn" id="phn" placeholder="Mobile Number*" class="form-control" required aria-required="true">
                                                 </div>
 
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="text" name="subject" placeholder="Subject" class="form-control">
+                                                    <input type="text" name="subject" id="subject"  placeholder="Subject" class="form-control" required aria-required="true">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <textarea cols="30" name="cbxmessage" rows="6" placeholder="Message*" class="form-control" required></textarea>
+                                                    <textarea cols="30" name="message" id="message" rows="5" placeholder="Message*" class="form-control" required></textarea>
                                                 </div>
                                             </div>
                                             <div class="row">

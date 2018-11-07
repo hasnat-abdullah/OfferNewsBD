@@ -115,10 +115,10 @@ class Coupon(models.Model):
 
 
 class Contact(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=30,blank=False)
     phn = models.CharField(db_index=True, blank=False, max_length=11, default=1)
     subject = models.CharField(max_length=100)
-    message = models.TextField()
+    message = models.TextField(max_length=250)
     sendOn = models.DateTimeField(db_index=True, auto_now=False, auto_now_add=True)
 
     def __str__(self):

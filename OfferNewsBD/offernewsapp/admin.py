@@ -95,7 +95,7 @@ admin.site.register(Post, PostModel)
 
 
 class ContactModel(admin.ModelAdmin):
-    list_display = ["__str__"]
+    list_display = ["__str__", "phn", "subject", "sendOn"]
     search_fields = ["__str__"]
 
     class Meta:
