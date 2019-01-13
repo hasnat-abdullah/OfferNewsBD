@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import ContactForm, SignUpForm
 from django.contrib.auth.models import User
+from django.urls import resolve
 
 
 # from django.contrib.auth.forms import UserCreationForm
@@ -27,7 +28,10 @@ def index(request):
 
 
 def getauthor(request, name):
-    return render(request, "dashboard.html")
+    context = {
+        'username': name
+    }
+    return render(request, "dashboard.html", context)
 
 
 def getcategory(request, name):

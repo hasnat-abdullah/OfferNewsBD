@@ -1,7 +1,7 @@
 
 {% extends 'headerFooter.html' %}
 {% load static %}
-{% block title %}Offer News BD{% endblock %}
+{% block title %}Dashboard{% endblock %}
 {% block stylesheet %} {% endblock %}
 {% block content %}
 
@@ -24,13 +24,13 @@
                 <div class="col-md-3 no-padding-left-right">
                     <div class="dashboard-nav">
                         <ul>
-                            <li class="active"><a href="#"><img src="{% static 'assets/img/dash-icon/1.png' %}" alt="Profile" class="">Profile</a></li>
-                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/2.png' %}" alt="Coupon" class="">Coupon<span>09</span></a></li>
-                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/3.png' %}" alt="Deal" class="">Deal</a></li>
-                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/4.png' %}" alt="Unpublish" class="">Unpublish<span>20</span></a></li>
-                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/5.png' %}" alt="Schedule" class="">Schedule</a></li>
-                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/6.png' %}" alt="Upcoming" class="">Upcoming</a></li>
-                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/7.png' %}" alt="Configure" class="">Configure</a></li>
+                            <li class="active tab1" onclick="make_active(this)"><a href="#tab1"><img src="{% static 'assets/img/dash-icon/1.png' %}" alt="Profile" class="">{{ username }}</a></li>
+                            <li class="tab2" onclick="make_active(this)"><a href="#tab2"><img src="{% static 'assets/img/dash-icon/2.png' %}" alt="Coupon" class="">Offer<span>09</span></a></li>
+                            <li class="tab3" onclick="make_active(this)"><a href="#tab3"><img src="{% static 'assets/img/dash-icon/3.png' %}" alt="Deal" class="">Sponser</a></li>
+                            <li class="tab4" onclick="make_active(this)"><a href="#tab4"><img src="{% static 'assets/img/dash-icon/4.png' %}" alt="Unpublish" class="">Company<span>20</span></a></li>
+                            <li class="tab5" onclick="make_active(this)"><a href="#tab5"><img src="{% static 'assets/img/dash-icon/5.png' %}" alt="Schedule" class="">Edit</a></li>
+{#                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/6.png' %}" alt="Upcoming" class="">Upcoming</a></li>#}
+{#                            <li><a href="#"><img src="{% static 'assets/img/dash-icon/7.png' %}" alt="Configure" class="">Configure</a></li>#}
                         </ul>
                     </div>
                 </div>
@@ -186,10 +186,39 @@
             </div>
         </div>
     </div>
-    <!-- Dashboard Wrapper End -->
 
 {% endblock %}
 
 {% block script %}
+
+    <script>
+
+        $(window).ready(function () {
+            check_url();
+        });
+
+        $(window).on('hashchange', function(e){
+            check_url();
+        });
+        
+        function check_url() {
+            var url      = window.location.href;
+            var index = url.indexOf('#');
+
+            if(index>=0) {
+
+                url = url.substr(url.indexOf('#')+1, url.length)
+
+                var item = $('.'+url);
+                make_active(item)
+            }
+        }
+
+        function make_active(obj) {
+            //$(obj).parent().children('.active').removeClass('active');
+            $(obj).siblings('.active').removeClass('active');
+            $(obj).addClass('active');
+        }
+    </script>
 
     {% endblock %}
