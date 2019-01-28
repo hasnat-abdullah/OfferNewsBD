@@ -3,6 +3,11 @@ from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, F
 
 # Register your models here.
 
+#SuperUser Info
+#Username: jahapona
+#Email address: jahapona@vua.com
+#Password: jahapona
+
 
 class ProfileModel(admin.ModelAdmin):
     list_display = ["__str__","phn"]

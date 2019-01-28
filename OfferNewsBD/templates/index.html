@@ -142,7 +142,7 @@
                                     {%  url 'coupon' id=f.id %}
                                 {% endif %}">
                                     {{ f.title }} </a></h6>
-                                <p>{{ f.description }}</p>
+                                <p>{{ f.description|truncatechars:60 }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{f.expiredOn}}</p>
                                     <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>
@@ -213,7 +213,7 @@
                                     {%  url 'coupon' id=p.id %}
                                 {% endif %}">
                                     {{ p.title }} </a></h6>
-                                <p>{{ p.description }}</p>
+                                <p>{{ p.description|truncatechars:60}}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{p.expiredOn}}</p>
                                     <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>
@@ -284,7 +284,7 @@
                                     {%  url 'coupon' id=p.id %}
                                 {% endif %}">
                                     {{ p.title }} </a></h6>
-                                <p>{{ p.description }}</p>
+                                <p>{{ p.description|truncatechars:60 }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{p.expiredOn}}</p>
                                     <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>

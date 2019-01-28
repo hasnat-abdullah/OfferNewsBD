@@ -135,7 +135,7 @@
                                     {%  url 'coupon' id=p.id %}
                                 {% endif %}">
                                         {{ p.title }}</a></h6>
-                                    <p>{{ p.description }}</p>
+                                    <p>{{ p.description|truncatechars:60 }}</p>
                                     <div class="deal-content-bottom">
                                         <p><i class="fa fa-clock-o"></i> Expired: {{p.expiredOn}}</p>
                                         <a href="
