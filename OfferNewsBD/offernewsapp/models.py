@@ -6,7 +6,7 @@ from django.utils.timezone import datetime
 # Coding By Abdullah on 8/10/2018
 
 class Profile (models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.OneToOneField(User, on_delete=models.CASCADE)
     phn = models.CharField(db_index=True, max_length=11, unique=True)
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
@@ -14,23 +14,8 @@ class Profile (models.Model):
     #slug = models.SlugField(max_length=80, unique=True, blank=False)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.name.username} Profile'
 
-
-class UserAddress (models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    city = models.CharField(max_length=15)
-
-    def __str__(self):
-        return f'{self.user.city} UserAddress'
-
-
-class UserEmail (models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(db_index=True, unique=True)
-
-    def __str__(self):
-        return f'{self.user.email} UserEmail'
 
 
 class Company (models.Model):
@@ -40,7 +25,7 @@ class Company (models.Model):
     comPhn = models.CharField(max_length=11)
     comWeb = models.CharField(max_length=42, blank=True)
     comImage = models.ImageField(default='default.jpg', upload_to='com_pics', blank=True)
-    AuthorId = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
     isVerified = models.BooleanField(blank=False)
@@ -48,6 +33,7 @@ class Company (models.Model):
 
     def __str__(self):
         return self.comName
+
 
 
 class Branch(models.Model):
@@ -61,12 +47,14 @@ class Branch(models.Model):
         return self.branchName
 
 
+
 class Category(models.Model):
     catName = models.CharField(max_length=20)
     catIcon = models.FileField(default='default.jpg', upload_to='cat_pics', blank=True)
 
     def __str__(self):
         return self.catName
+
 
 
 class Post(models.Model):
@@ -106,12 +94,154 @@ class Post(models.Model):
         return self.title
 
 
+
 class Coupon(models.Model):
     postId = models.OneToOneField(Post, on_delete=models.CASCADE)
     couponCode = models.CharField(db_index=True, max_length=50)
 
     def __str__(self):
         return self.couponCode
+
+
+
+
+class PostFeaturePricing(models.Model):
+    COVER_BIG = 'Cover Big'
+    COVER_SMALL = 'Cover Small'
+    FIRST_PAGE = 'First Page'
+
+    Position_Type = (
+        (COVER_BIG, 'Cover_Big'),
+        (COVER_SMALL, 'Cover_Small'),
+        (FIRST_PAGE, 'First_Page'),
+    )
+    position = models.CharField(max_length=15, choices=Position_Type, default=FIRST_PAGE)
+    price = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.position
+
+
+
+
+class ComFeaturePricing(models.Model):
+    COM_PAGE = 'Company Page'
+    FIRST_PAGE = 'First Page'
+
+    Position_Type = (
+        (COM_PAGE, 'Com_Page'),
+        (FIRST_PAGE, 'First_Page'),
+    )
+    position = models.CharField(max_length=15, choices=Position_Type, default=FIRST_PAGE)
+    price = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.position
+
+
+
+
+class FeaturedPost(models.Model):
+    COVER_BIG = 'Cover Big'
+    COVER_SMALL = 'Cover Small'
+    FIRST_PAGE = 'First Page'
+
+    Position_Type = (
+        (COVER_BIG, 'Cover_Big'),
+        (COVER_SMALL, 'Cover_Small'),
+        (FIRST_PAGE, 'First_Page'),
+    )
+    postId = models.ForeignKey(Post, on_delete=models.CASCADE)
+    position = models.CharField(max_length=15, choices=Position_Type, default=FIRST_PAGE)
+    featuredExpireDate = models.DateField()
+    featuredDate = models.DateField(auto_now=False, auto_now_add=True)
+    isActive = models.BooleanField(db_index=True, default=True)
+
+    def __str__(self):
+        return self.position
+
+    @property
+    def PriceCalculation (self, featuredDate, featuredExpireDate):
+        delta = featuredExpireDate - featuredDate
+        price = delta.days * PostFeaturePricing.price
+        return price
+
+
+
+class FeaturedCom(models.Model):
+    COM_PAGE = 'Company Page'
+    FIRST_PAGE = 'First Page'
+
+    Position_Type = (
+        (COM_PAGE, 'Com_Page'),
+        (FIRST_PAGE, 'First_Page'),
+    )
+    comId = models.ForeignKey(Company, on_delete=models.CASCADE)
+    position = models.CharField(max_length=15, choices=Position_Type, default=FIRST_PAGE)
+    featuredExpireDate = models.DateField()
+    featuredDate = models.DateField(auto_now=False, auto_now_add=True)
+    isActive = models.BooleanField(db_index=True, default=True)
+    priceId = models.ForeignKey(ComFeaturePricing, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.position
+
+    @property
+    def PriceCalculation(self, featuredDate, featuredExpireDate):
+        delta = featuredExpireDate - featuredDate
+        price = delta.days * ComFeaturePricing.price
+        return price
+
+
+
+class ExternalAdPricing(models.Model):
+    FRONT_PAGE = 'Front Page'
+    POPUP = 'Popup'
+
+    Position_Type = (
+        (POPUP, 'Popup'),
+        (FRONT_PAGE, 'Front_Page'),
+    )
+    position = models.CharField(max_length=15, choices=Position_Type, default=FRONT_PAGE)
+    price = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.position
+
+
+
+class ExternalAd(models.Model):
+    FRONT_PAGE = 'Front Page'
+    POPUP = 'Popup'
+
+    Position_Type = (
+        (POPUP, 'Popup'),
+        (FRONT_PAGE, 'Front_Page'),
+    )
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(db_index=True, max_length=100)
+    position = models.CharField(max_length=15, choices=Position_Type, default=FRONT_PAGE)
+    featuredExpireDate = models.DateField()
+    featuredDate = models.DateField(auto_now=False, auto_now_add=True)
+    isActive = models.BooleanField(db_index=True, default=True)
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def PriceCalculation(self, featuredDate, featuredExpireDate):
+        delta = featuredExpireDate - featuredDate
+        price = delta.days * ExternalAdPricing.price
+        return price
+
+class Meta(models.Model):
+    title = models.CharField(max_length=200)
+    keyword = models.TextField()
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
 
 
 class Contact(models.Model):
@@ -123,85 +253,3 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Featured(models.Model):
-    FEATURE_POST = 'FP'
-    FEATURE_COMPANY = 'FC'
-
-    Featured_Type = (
-        (FEATURE_POST, 'Feature_Post'),
-        (FEATURE_COMPANY, 'Feature_Company'),
-    )
-    featuredType = models.CharField(max_length=2, choices=Featured_Type, default=FEATURE_POST)
-    postId = models.OneToOneField(Post, db_index=True, on_delete=models.CASCADE)
-    featuredExpireDate = models.DateField()
-    featuredDate = models.DateField(auto_now=False, auto_now_add=True)
-    isActive = models.BooleanField(db_index=True, default=True)
-    # price = models.ForeignKey(Pricing, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.featuredType
-
-
-class FeaturePricing(models.Model):
-    FEATURE_POST = 'FP'
-    FEATURE_COMPANY = 'FC'
-
-    Featured_Type = (
-        (FEATURE_POST, 'Feature_Post'),
-        (FEATURE_COMPANY, 'Feature_Company'),
-
-    )
-    durationType = models.CharField(max_length=20)
-    featuredType = models.CharField(max_length=2, choices=Featured_Type, default=FEATURE_POST)
-    # position = models.ForeignKey(FeaturedPosition, on_delete=models.CASCADE())
-    priceAmount = models.PositiveIntegerField()
-
-    def __str__(self):
-        return self.featuredType
-
-
-class AdPricing(models.Model):
-    durationType = models.CharField(max_length=20)
-    price = models.PositiveIntegerField()
-
-    def __str__(self):
-        return self.durationType
-
-
-class FeaturedPosition(models.Model):
-    COVER = 'C'
-    FIRST_PAGE = 'F'
-    POPUP = 'P'
-
-    Position_Type = (
-        (COVER, 'Cover'),
-        (FIRST_PAGE, 'First_Page'),
-        (POPUP, 'Popup'),
-    )
-    position = models.CharField(max_length=1, choices=Position_Type, default=FIRST_PAGE)
-
-    def __str__(self):
-        return self.position
-
-
-class Meta(models.Model):
-    title = models.CharField(max_length=200)
-    keyword = models.TextField()
-    description = models.TextField()
-
-    def __str__(self):
-        return self.title
-
-
-class Advertise(models.Model):
-    advertiser = models.ForeignKey(User, on_delete=models.CASCADE)
-    durationType = models.CharField(max_length=20)
-    adExpireDate = models.DateField()
-    adDate = models.DateField(auto_now=False, auto_now_add=True)
-    isActive = models.BooleanField(default=True)
-    price = models.ForeignKey(AdPricing, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.advertiser

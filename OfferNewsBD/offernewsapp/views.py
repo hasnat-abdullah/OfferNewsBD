@@ -1,10 +1,9 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, \
-    FeaturedPosition, Meta, Advertise
+from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, FeaturedPost,FeaturedCom, PostFeaturePricing, ComFeaturePricing, Meta, ExternalAdPricing, ExternalAd
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from .forms import ContactForm, SignUpForm
+from .forms import ContactForm, SignUpForm, PostForm
 from django.contrib.auth.models import User
 from django.urls import resolve
 
@@ -16,7 +15,7 @@ from django.urls import resolve
 def index(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')
     featuredpost = Post.objects.filter(isActive=True, isFeatured=True).order_by('-postedOn')
-    couponpost = Featured.objects.filter(isActive=True).order_by('?')
+    couponpost = FeaturedPost.objects.filter(isActive=True).order_by('?')
     store = Company.objects.all().order_by('-createdOn')
     context = {
         'post': post,
@@ -112,8 +111,17 @@ def getstore(request):
 
 
 def getsubmition(request):
-    # form = CreateForm()
-    return render(request, "submit-coupon.html")
+    if request.user.is_authenticated:
+        u = get_object_or_404( Profile, name=request.user.id)
+        form = PostForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.author = u
+            instance.save()
+            return redirect('index')
+        return render(request, "submit-coupon.html", {"form": form})
+    else:
+        return redirect('login')
 
 
 # Login Function

@@ -1,13 +1,7 @@
 from django.contrib import admin
-from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, Featured, FeaturePricing, AdPricing, FeaturedPosition, Meta, Advertise, UserAddress, UserEmail
+from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, FeaturedPost,FeaturedCom, PostFeaturePricing, ComFeaturePricing, Meta, ExternalAdPricing, ExternalAd
 
 # Register your models here.
-
-#SuperUser Info
-#Username: jahapona
-#Email address: jahapona@vua.com
-#Password: jahapona
-
 
 class ProfileModel(admin.ModelAdmin):
     list_display = ["__str__","phn"]
@@ -20,30 +14,8 @@ class ProfileModel(admin.ModelAdmin):
 admin.site.register(Profile, ProfileModel)
 
 
-class UserAddressModel(admin.ModelAdmin):
-    list_display = ["__str__","city"]
-    search_fields = ["__str__"]
-
-    class Meta:
-        Model = UserAddress
-
-
-admin.site.register(UserAddress, UserAddressModel)
-
-
-class UserEmailModel(admin.ModelAdmin):
-    list_display = ["__str__","email"]
-    search_fields = ["__str__"]
-
-    class Meta:
-        Model = UserEmail
-
-
-admin.site.register(UserEmail, UserEmailModel)
-
-
 class CompanyModel(admin.ModelAdmin):
-    list_display = ["__str__", "comPhn", "AuthorId"]
+    list_display = ["__str__", "comPhn", "author"]
     search_fields = ["__str__"]
 
     class Meta:
@@ -110,48 +82,73 @@ class ContactModel(admin.ModelAdmin):
 admin.site.register(Contact, ContactModel)
 
 
-class FeaturedModel(admin.ModelAdmin):
+class FeaturedPostModel(admin.ModelAdmin):
     list_display = ["__str__"]
     search_fields = ["__str__"]
 
     class Meta:
-        Model = Featured
+        Model = FeaturedPost
 
 
-admin.site.register(Featured, FeaturedModel)
+admin.site.register(FeaturedPost, FeaturedPostModel)
 
 
-class FeaturePricingModel(admin.ModelAdmin):
+
+class FeaturedComModel(admin.ModelAdmin):
     list_display = ["__str__"]
     search_fields = ["__str__"]
 
     class Meta:
-        Model = FeaturePricing
+        Model = FeaturedCom
 
 
-admin.site.register(FeaturePricing, FeaturePricingModel)
+admin.site.register(FeaturedCom, FeaturedComModel)
 
 
-class AdPricingModel(admin.ModelAdmin):
+
+class PostFeaturePricingModel(admin.ModelAdmin):
     list_display = ["__str__"]
     search_fields = ["__str__"]
 
     class Meta:
-        Model = AdPricing
+        Model = PostFeaturePricing
+
+admin.site.register(PostFeaturePricing, PostFeaturePricingModel)
 
 
-admin.site.register(AdPricing, AdPricingModel)
 
-
-class FeaturedPositionModel(admin.ModelAdmin):
+class ComFeaturePricingModel(admin.ModelAdmin):
     list_display = ["__str__"]
-    search_fields = ["__str__", "details"]
+    search_fields = ["__str__"]
 
     class Meta:
-        Model = FeaturedPosition
+        Model = ComFeaturePricing
+
+admin.site.register(ComFeaturePricing, ComFeaturePricingModel)
 
 
-admin.site.register(FeaturedPosition, FeaturedPositionModel)
+
+class ExternalAdPricingModel(admin.ModelAdmin):
+    list_display = ["__str__"]
+    search_fields = ["__str__"]
+
+    class Meta:
+        Model = ExternalAdPricing
+
+
+admin.site.register(ExternalAdPricing, ExternalAdPricingModel)
+
+
+class ExternalAdModel(admin.ModelAdmin):
+    list_display = ["__str__"]
+    search_fields = ["__str__"]
+
+    class Meta:
+        Model = ExternalAd
+
+
+admin.site.register(ExternalAd, ExternalAdModel)
+
 
 
 class MetaModel(admin.ModelAdmin):
@@ -163,14 +160,3 @@ class MetaModel(admin.ModelAdmin):
 
 
 admin.site.register(Meta, MetaModel)
-
-
-class AdvertiseModel(admin.ModelAdmin):
-    list_display = ["__str__"]
-    search_fields = ["__str__"]
-
-    class Meta:
-        Model = Advertise
-
-
-admin.site.register(Advertise, AdvertiseModel)
