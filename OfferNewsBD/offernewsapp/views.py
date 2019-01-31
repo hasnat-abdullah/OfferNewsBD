@@ -112,11 +112,11 @@ def getstore(request):
 
 def getsubmition(request):
     if request.user.is_authenticated:
-        u = get_object_or_404( Profile, name=request.user.id)
+        getUser = name=request.user.id
         form = PostForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.author = u
+            instance.author = getUser
             instance.save()
             return redirect('index')
         return render(request, "submit-coupon.html", {"form": form})

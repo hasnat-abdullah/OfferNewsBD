@@ -14,7 +14,7 @@ class Profile (models.Model):
     #slug = models.SlugField(max_length=80, unique=True, blank=False)
 
     def __str__(self):
-        return f'{self.name.username} Profile'
+        return self.name.username
 
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact, Post
+from .models import Contact, Post, Category, Company
 from django.contrib.auth.forms import UserCreationForm  # Form for signup
 from django.contrib.auth.models import User  # Django default user table
 
@@ -7,7 +7,7 @@ from django.contrib.auth.models import User  # Django default user table
 class PostForm(forms.ModelForm):
     #title = forms.CharField(required=True, max_length=30, label='', widget=forms.TextInput(attrs={"class":"form-control", "placeholder":"Your Name*"}))
     #description = forms.CharField(required=True, max_length=11, label='', widget=forms.NumberInput(attrs={"class":"form-control", "placeholder":"Mobile Number*"}))
-    #comName = forms.CharField(required=True, max_length=50, label='', widget=forms.TextInput(attrs={"class":"form-control", "placeholder":"Subject*"}))
+    #comName = forms.TypedMultipleChoiceField(choices=tuple(Company.comName), widget=forms.Select(attrs={"class":"form-control", "placeholder":"Subject*"}))
     #category = forms.CharField(required=True, max_length=250, label='', widget=forms.Textarea(attrs={"class":"form-control", "placeholder":"Message*"}))
     #offerType = forms.CharField(required=True, max_length=30, label='',widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Your Name*"}))
     #AmountType = forms.CharField(required=True, max_length=11, label='',widget=forms.NumberInput(attrs={"class": "form-control", "placeholder": "Mobile Number*"}))
