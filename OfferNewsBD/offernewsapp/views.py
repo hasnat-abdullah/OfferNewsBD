@@ -91,10 +91,12 @@ def getcontact(request):
 
 def getsinglecoupon(request, id):
     coupon = get_object_or_404(Post, pk=id)
+    code=Coupon.objects.filter(postId=coupon.id)
     related = Post.objects.filter(category=coupon.category).exclude(id=id)[:4]
     context = {
         'coupon': coupon,
         'related': related,
+        'Code': code,
     }
     return render(request, "single-coupon-code.html", context)
 
@@ -110,7 +112,13 @@ def getsingledeal(request, id):
 
 
 def getsinglestore(request, id):
-    return render(request, "single-store.html")
+    company=get_object_or_404(Company, pk=id)
+    post=Post.objects.filter(comName=company.id)
+    context={
+        'company':company,
+        'post':post,
+    }
+    return render(request, "single-store.html", context)
 
 
 def getstore(request):

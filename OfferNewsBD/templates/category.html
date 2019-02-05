@@ -116,7 +116,13 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="item deal-item">
                                 <div class="deal-thumb">
-                                    <img src="{{ p.postImage.url }}" alt="" class="img-responsive">
+                                    <a href="
+                                {% if p.offerType == 'D' %}
+                                    {%  url 'deal' id=p.id %}
+                                {% else %}
+                                    {%  url 'coupon' id=p.id %}
+                                {% endif %}">
+                                    <img src="{{ p.postImage.url }}" alt="" class="img-responsive"></a>
                                     <div class="deal-badge">
                                         87%
                                     </div>
@@ -144,7 +150,7 @@
                                 {% else %}
                                     {%  url 'coupon' id=p.id %}
                                 {% endif %}"
-                                             class="btn btn-sm">Get It</a>
+                                             class="btn btn-sm">Details</a>
                                     </div>
                                 </div>
                             </div>
