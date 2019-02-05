@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import ContactForm, SignUpForm, PostForm
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.urls import resolve
 
 
@@ -44,11 +45,17 @@ def getcategory(request, name):
 
 
 def getalloffer(request):
-    post = Post.objects.filter(isActive=True).order_by('-postedOn')[:18]
+    post = Post.objects.filter(isActive=True).order_by('-postedOn')
     coupon = Post.objects.filter(isActive=True, offerType='C').order_by('-postOn')
     deal = Post.objects.filter(isActive=True, offerType='D').order_by('-postOn')
     cat = Category.objects.all()
-
+    # ==========Search==========
+    search = request.GET.get('q')
+    if search:
+        post=post.filter(
+            Q(title__icontains=search) |
+            Q(description__icontains= search)
+        )
     # ==========Paginator==========
     paginator = Paginator(post, 12)  # Show 12 contacts per page
 
