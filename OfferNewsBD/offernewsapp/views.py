@@ -56,8 +56,9 @@ def getalloffer(request):
             Q(title__icontains=search) |
             Q(description__icontains= search)
         )
+
     # ==========Paginator==========
-    paginator = Paginator(post, 12)  # Show 12 contacts per page
+    paginator = Paginator(post, 15)  # Show 15 contacts per page
 
     page = request.GET.get('page')
     totalArticle = paginator.get_page(page)
@@ -114,9 +115,14 @@ def getsingledeal(request, id):
 def getsinglestore(request, id):
     company=get_object_or_404(Company, pk=id)
     post=Post.objects.filter(comName=company.id)
+
+    #========Paginator==========
+    paginator = Paginator(post, 8)  # Show 8 contacts per page
+    page = request.GET.get('page')
+    totalArticle = paginator.get_page(page)
     context={
         'company':company,
-        'post':post,
+        'post':totalArticle,
     }
     return render(request, "single-store.html", context)
 
