@@ -109,24 +109,26 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="checkbox checkbox-primary" style="margin-top: 10px;">
-                                                        <input id="isFeature" type="checkbox">
+                                                    <div class="checkbox checkbox-primary">
+                                                        <input id="isFeature" name="isFeature" type="checkbox" onchange="is_Feature(this)">
                                                         <label for="isFeature">
                                                             Feature This Offer <a class="modalAnchor" type="button" data-toggle="modal" data-target="#featureInfo"><i class="fa fa-question-circle"></i></a>
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="feature_exp_date" placeholder="Feature Exp Date : dd/mm/yyyy" class="form-control datePickr" required aria-required="true">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <select name="feature_position" class="form-control">
-                                                        <option>Select Feature Position *</option>
-                                                        <option value="0">Position One</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="feature_price" value="100Tk" class="form-control" required disabled>
+                                                <div class="featureProperty" style="display: none;">
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="feature_exp_date" placeholder="Feature Exp Date : dd/mm/yyyy" class="form-control datePickr" required aria-required="true">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select name="feature_position" class="form-control">
+                                                            <option>Select Feature Position *</option>
+                                                            <option value="0">Position One</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="feature_price" value="0Tk" class="form-control" required disabled>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkbox checkbox-primary">
@@ -226,5 +228,28 @@
 {% endblock %}
 
 {% block script %}
+
+    <script>
+        function is_Feature(obj) {
+
+            var item = $(obj).parent('.checkbox');
+
+            if($('#isFeature:checkbox:checked').length > 0) {
+
+
+                console.log('checked');
+                $('.featureProperty').show();
+
+                item.css('margin-top', '10px');
+            }
+            else {
+
+                console.log('un-checked');
+                $('.featureProperty').hide();
+
+                item.css('margin-top', '0px');
+            }
+        }
+    </script>
 
     {% endblock %}
