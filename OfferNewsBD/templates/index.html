@@ -132,7 +132,6 @@
                                         <span class="popOver" data-toggle="tooltip" data-placement="top" title="70%"> </span>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="deal-content">
                                 <h6><a href="
@@ -145,7 +144,12 @@
                                 <p>{{ f.description|truncatechars:60 }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{f.expiredOn}}</p>
-                                    <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>
+                                    <a type="button" href="
+                                {% if f.offerType == 'D' %}
+                                    {%  url 'deal' id=f.id %}
+                                {% else %}
+                                    {%  url 'coupon' id=f.id %}
+                                {% endif %}" class="btn btn-sm">Details</a>
                                 </div>
                             </div>
                         </div>
@@ -183,18 +187,18 @@
                 <div class="col-md-12">
                     <div id="new-deal-carousel" class="owl-carousel owl-theme new-deal-list">
                         <!-- Deal Single Item Start -->
-                        {% for p in post %}
+                        {% for n in post %}
                             <div class="item deal-item">
                             <div class="deal-thumb">
 
                             <!-- Query for choosing right single page dea or coupon -->
                                 <a href="
-                                {% if p.offerType == 'D' %}
-                                    {%  url 'deal' id=p.id %}
+                                {% if n.offerType == 'D' %}
+                                    {%  url 'deal' id=n.id %}
                                 {% else %}
-                                    {%  url "coupon" id=p.id %}
+                                    {%  url "coupon" id=n.id %}
                                 {% endif %}">
-                                    <img src="{{ p.postImage.url }}" alt="" class="img-responsive"></a>
+                                    <img src="{{ n.postImage.url }}" alt="" class="img-responsive"></a>
                                 <div class="deal-badge">
                                     87%
                                 </div>
@@ -207,16 +211,21 @@
                             </div>
                             <div class="deal-content">
                                 <h6><a href="
-                                {% if p.offerType == 'D' %}
-                                    {%  url 'deal' id=p.id %}
+                                {% if n.offerType == 'D' %}
+                                    {%  url 'deal' id=n.id %}
                                 {% else %}
-                                    {%  url 'coupon' id=p.id %}
+                                    {%  url 'coupon' id=n.id %}
                                 {% endif %}">
-                                    {{ p.title }} </a></h6>
-                                <p>{{ p.description|truncatechars:60}}</p>
+                                    {{ n.title }} </a></h6>
+                                <p>{{ n.description|truncatechars:60}}</p>
                                 <div class="deal-content-bottom">
-                                    <p><i class="fa fa-clock-o"></i> Expired: {{p.expiredOn}}</p>
-                                    <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>
+                                    <p><i class="fa fa-clock-o"></i> Expired: {{n.expiredOn}}</p>
+                                    <a type="button" href="
+                                {% if n.offerType == 'D' %}
+                                    {%  url 'deal' id=n.id %}
+                                {% else %}
+                                    {%  url 'coupon' id=n.id %}
+                                {% endif %}" class="btn btn-sm">Details</a>
                                 </div>
                             </div>
                         </div>
@@ -287,7 +296,12 @@
                                 <p>{{ p.description|truncatechars:60 }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{p.expiredOn}}</p>
-                                    <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>
+                                    <a type="button" href="
+                                {% if p.offerType == 'D' %}
+                                    {%  url 'deal' id=p.id %}
+                                {% else %}
+                                    {%  url 'coupon' id=p.id %}
+                                {% endif %}" class="btn btn-sm">Details</a>
                                 </div>
                             </div>
                         </div>

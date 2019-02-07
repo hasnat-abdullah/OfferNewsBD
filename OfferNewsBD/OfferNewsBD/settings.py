@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'OfferNewsBD.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-#os.path.join(BASE_DIR,
+#os.path.join(BASE_DIR,)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import ContactForm, SignUpForm, PostForm
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.urls import resolve
 
 
@@ -44,13 +45,20 @@ def getcategory(request, name):
 
 
 def getalloffer(request):
-    post = Post.objects.filter(isActive=True).order_by('-postedOn')[:18]
+    post = Post.objects.filter(isActive=True).order_by('-postedOn')
     coupon = Post.objects.filter(isActive=True, offerType='C').order_by('-postOn')
     deal = Post.objects.filter(isActive=True, offerType='D').order_by('-postOn')
     cat = Category.objects.all()
+    # ==========Search==========
+    search = request.GET.get('q')
+    if search:
+        post=post.filter(
+            Q(title__icontains=search) |
+            Q(description__icontains= search)
+        )
 
     # ==========Paginator==========
-    paginator = Paginator(post, 12)  # Show 12 contacts per page
+    paginator = Paginator(post, 15)  # Show 15 contacts per page
 
     page = request.GET.get('page')
     totalArticle = paginator.get_page(page)
@@ -84,10 +92,12 @@ def getcontact(request):
 
 def getsinglecoupon(request, id):
     coupon = get_object_or_404(Post, pk=id)
+    code=Coupon.objects.filter(postId=coupon.id)
     related = Post.objects.filter(category=coupon.category).exclude(id=id)[:4]
     context = {
         'coupon': coupon,
         'related': related,
+        'Code': code,
     }
     return render(request, "single-coupon-code.html", context)
 
@@ -103,7 +113,18 @@ def getsingledeal(request, id):
 
 
 def getsinglestore(request, id):
-    return render(request, "single-store.html")
+    company=get_object_or_404(Company, pk=id)
+    post=Post.objects.filter(comName=company.id)
+
+    #========Paginator==========
+    paginator = Paginator(post, 8)  # Show 8 contacts per page
+    page = request.GET.get('page')
+    totalArticle = paginator.get_page(page)
+    context={
+        'company':company,
+        'post':totalArticle,
+    }
+    return render(request, "single-store.html", context)
 
 
 def getstore(request):

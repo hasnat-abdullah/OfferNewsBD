@@ -41,7 +41,7 @@
                     <div class="single-coupon-content">
                         <h5>{{ coupon.title }}</h5>
                         <p>{{ coupon.description }}</p>
-                        <p class="expiring-time"><span class="btn btn-brand coupon-type"><a href="">{{ coupon.comName }} </span><i class="fa fa-clock-o"></i> Expired on: {{coupon.expiredOn}}</p>
+                        <p class="expiring-time"><span class="btn btn-brand coupon-type"><a href="#">{{ coupon.comName }} </span><i class="fa fa-clock-o"></i> Expired on: {{coupon.expiredOn}}</p>
 
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                                 <p>{{ r.description }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{r.expiredOn}}</p>
-                                    <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Get It</a>
+                                    <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Details</a>
                                 </div>
                             </div>
                         </div>
@@ -142,14 +142,14 @@
                             </div>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-12">
-                            <p>COPY THIS CODE AND USE AT CHECKOUT</p>
+                            <p>{{ coupon.description }}</p>
                             <div class="input-group">
-                                <input type="text" class="form-control" autocomplete="off" readonly value="HFRESH10">
+                                <input type="text" class="form-control" autocomplete="off" readonly value="{{ code.couponCode }}">
                                 <div class="input-group-btn">
-                                    <button class="clipboard btn btn-default" data-clipboard-text="HFRESH10"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy to Clipboard</button>
+                                    <button class="clipboard btn btn-default" data-clipboard-text="{{ code.couponCode }}"><i class="fa fa-clipboard" aria-hidden="true"></i> Copy to Clipboard</button>
                                 </div>
                             </div>
-                            <a class="btn btn-brand pull-right" href="{{  coupon.goingUrl }}" target="_blank" >Go To Store</a>
+                            <a class="btn btn-brand pull-right" href="{{ coupon.goingUrl }}" target="_blank" >Go To Store</a>
                         </div>
                     </div>
                 </div>
