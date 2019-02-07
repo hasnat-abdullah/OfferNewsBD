@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="contact-title">
-                                        <h6>Submit Coupon <a class="modalAnchor" type="button" data-toggle="modal" data-target="#couponInfo"><i class="fa fa-question-circle"></i></a> </h6>
+                                        <h6>Submit Offer <a class="modalAnchor" type="button" data-toggle="modal" data-target="#couponInfo"><i class="fa fa-question-circle"></i></a> </h6>
                                     </div>
                                 </div>
                             </div>
@@ -23,75 +23,68 @@
                                     <div class="post-comment-form-group">
                                         <form action="" method="post" enctype="multipart/form-data">
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    {% csrf_token %}
-                                                    {{ form.as_p }}
+                                                <div class="col-md-6">
+{#                                                    {% csrf_token %}#}
+{#                                                    {{ form.as_p }}#}
                                                     <select name="coupon_store" class="form-control">
                                                         <option>Select Store *</option>
-                                                        <option>Lorem</option>
-                                                        <option>Ipsum</option>
-                                                        <option>Eiusmod</option>
-                                                        <option>Tempor</option>
-                                                        <option>Incididunt</option>
+                                                        <option value="">Lorem</option>
                                                     </select>
                                                 </div>
 
+                                                <div class="col-md-6">
+{#                                                    {% csrf_token %}#}
+{#                                                    {{ form.as_p }}#}
+                                                    <select name="coupon_branch" class="form-control">
+                                                        <option>Select Branch *</option>
+                                                        <option value="">Lorem</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <select name="coupon_cat" class="form-control">
                                                         <option>Select Category *</option>
-                                                        <option>Lorem</option>
-                                                        <option>Ipsum</option>
-                                                        <option>Eiusmod</option>
-                                                        <option>Tempor</option>
-                                                        <option>Incididunt</option>
+                                                        <option value="">Lorem</option>
+                                                        <option value="">Ipsum</option>
+                                                        <option value="">Eiusmod</option>
+                                                        <option value="">Tempor</option>
+                                                        <option value="">Incididunt</option>
+                                                        <option value="">Lorem</option>
+                                                        <option value="">Ipsum</option>
+                                                        <option value="">Eiusmod</option>
+                                                        <option value="">Tempor</option>
+                                                        <option value="">Incididunt</option>
                                                     </select>
                                                 </div>
-
+                                                <div class="col-md-6">
+                                                    <select name="offer_type" class="form-control">
+                                                        <option>Offer Type *</option>
+                                                        <option value="0">Deal</option>
+                                                        <option value="1">Coupon</option>
+                                                    </select>
+                                                </div>
                                             </div>
-
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    <select id="coupon_type" name="coupon_type" class="form-control">
-                                                        <option>Select Offer Type *</option>
-                                                        <option value="code">Coupon</option>
-                                                        <option value="sale">Sale</option>
-                                                        <option value="gift">gift</option>
-
-                                                    </select>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="offer_amount" placeholder="Offer Amount" class="form-control" required aria-required="true">
                                                 </div>
-
-                                            </div>
-                                            <div class="row" id="coupon_code_wrapper">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <input id="coupon_code" type="text" name="coupon_code" placeholder="Coupon Code" class="form-control" required aria-required="true">
                                                 </div>
-
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    <input type="text" name="Offer Amount" placeholder="Offer Amount" class="form-control" required aria-required="true">
-                                                </div>
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <input type="file" name="offer_image" placeholder="Upload Offer Image" class="form-control" required aria-required="true">
                                                 </div>
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <input type="text" name="coupon_aff_url" placeholder="Offer URL" class="form-control" required aria-required="false">
                                                 </div>
-
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <input type="text" name="coupon_expires" placeholder="Exp Date : dd/mm/yyyy" class="form-control datePickr" required aria-required="true">
+                                                    <input style="margin-bottom: 15px;" type="text" name="coupon_expires" placeholder="Exp Date : dd/mm/yyyy" class="form-control datePickr" required aria-required="true">
                                                 </div>
-
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -102,7 +95,6 @@
                                                         </label>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -116,17 +108,47 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <div class="checkbox checkbox-primary" style="margin-top: 10px;">
+                                                        <input id="isFeature" type="checkbox">
+                                                        <label for="isFeature">
+                                                            Feature This Offer <a class="modalAnchor" type="button" data-toggle="modal" data-target="#featureInfo"><i class="fa fa-question-circle"></i></a>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="feature_exp_date" placeholder="Feature Exp Date : dd/mm/yyyy" class="form-control datePickr" required aria-required="true">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select name="feature_position" class="form-control">
+                                                        <option>Select Feature Position *</option>
+                                                        <option value="0">Position One</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="feature_price" value="100Tk" class="form-control" required disabled>
+                                                </div>
+                                                <div class="col-md-6">
                                                     <div class="checkbox checkbox-primary">
                                                         <input id="acceptTerms" type="checkbox">
                                                         <label for="acceptTerms">
                                                             Accept
                                                         </label>
-                                                        <a href="#">Terms &amp; Condition</a>
+                                                        <a target="_blank" href="/Terms/">Terms &amp; Condition</a>
                                                     </div>
                                                 </div>
-
                                             </div>
+{#                                            <div class="row">#}
+{#                                                <div class="col-md-12">#}
+{#                                                    <div class="checkbox checkbox-primary">#}
+{#                                                        <input id="acceptTerms" type="checkbox">#}
+{#                                                        <label for="acceptTerms">#}
+{#                                                            Accept#}
+{#                                                        </label>#}
+{#                                                        <a target="_blank" href="/Terms/">Terms &amp; Condition</a>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <input type="submit" value="Submit" class="btn btn-block btn-brand btn-lg">
@@ -168,6 +190,29 @@
                             <li>Eiusmod tempor incididunt ut labore et <a href="https://demo.smooththemes.com/html/WP-Coupon-HTML/page_submit.html#">dolore magna</a> aliqua. Ut enim ad minim veniam, quis nostrud exercitation</li>
                             <li>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt</li>
                         </ol>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="featureInfo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&#xD7;</button>
+                    <h4 class="modal-title">What is feature?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="submit-coupon-content">
+                        <h6>Description</h6>
                     </div>
                 </div>
                 <div class="modal-footer">
