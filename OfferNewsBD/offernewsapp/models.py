@@ -63,6 +63,15 @@ class Post(models.Model):
     PERCENTAGE = 'P'
     TAKA = 'T'
     GIFT = 'G'
+    NEW = 'NEW'
+    HOT = 'HOT'
+    EXPIRED = 'EXPIRED'
+
+    Badge_Type = (
+        (NEW, 'New'),
+        (HOT, 'Hot'),
+        (EXPIRED, 'Expired'),
+    )
 
     Offer_Type = (
         (DEAL, 'Deal'),
@@ -80,13 +89,14 @@ class Post(models.Model):
     category = models.ForeignKey(Category, db_index=True, on_delete=models.CASCADE)
     offerType = models.CharField(max_length=1, choices=Offer_Type, default=DEAL)
     AmountType = models.CharField(max_length=1, choices=Amount_Type, default=PERCENTAGE)
+    badgeType = models.CharField(max_length=7, choices=Badge_Type, default=NEW)
     Amount = models.CharField(max_length=200)
     postImage = models.ImageField(default='default.jpg', upload_to='post_pics', blank=True)
     isActive = models.BooleanField(default=True)
     isFeatured = models.BooleanField(default=False)
     goingUrl = models.URLField()
     postedOn = models.DateTimeField(auto_now=False, auto_now_add=True)
-    expiredOn = models.DateTimeField()
+    expiredOn = models.DateField()
     editedOn = models.DateTimeField(auto_now=True, auto_now_add=False)
     # slug = models.SlugField(max_length=80, unique=True, blank=False)
 
@@ -101,8 +111,6 @@ class Coupon(models.Model):
 
     def __str__(self):
         return self.couponCode
-
-
 
 
 class PostFeaturePricing(models.Model):
@@ -151,7 +159,7 @@ class FeaturedPost(models.Model):
         (COVER_SMALL, 'Cover_Small'),
         (FIRST_PAGE, 'First_Page'),
     )
-    postId = models.ForeignKey(Post, on_delete=models.CASCADE)
+    postId = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='postId')
     position = models.CharField(max_length=15, choices=Position_Type, default=FIRST_PAGE)
     featuredExpireDate = models.DateField()
     featuredDate = models.DateField(auto_now=False, auto_now_add=True)

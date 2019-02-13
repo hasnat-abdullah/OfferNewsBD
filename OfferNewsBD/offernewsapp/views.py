@@ -15,14 +15,16 @@ from django.urls import resolve
 
 def index(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')
-    featuredpost = Post.objects.filter(isActive=True, isFeatured=True).order_by('-postedOn')
-    couponpost = FeaturedPost.objects.filter(isActive=True).order_by('?')
+    featuredpost = Post.objects.filter(isFeatured=True).order_by('?')
+    coverPost=FeaturedPost.objects.filter(isActive=True, position='Cover Big').prefetch_related('postId').order_by('?')[:3]
+    coverSmallPost = FeaturedPost.objects.filter(isActive=True, position='Cover Small').prefetch_related('postId').order_by('?')[:2]
     store = Company.objects.all().order_by('-createdOn')
     context = {
         'post': post,
         'store': store,
         'featuredpost': featuredpost,
-        'couponpost': couponpost,
+        'coverPost': coverPost,
+        'coverSmallPost': coverSmallPost,
     }
     return render(request, "index.html", context)
 
@@ -175,15 +177,19 @@ def getsignup(request):
             instance = form.save(commit=False)
             instance.is_active = True
             usr = User.objects.all()
+            newFirstName = first_name.replace(" ", "")
             i = 0
             for u in usr:
-                if u.username == first_name + str(i) or u.username == first_name:
+                if u.username == newFirstName or u.username == newFirstName + str(i):
                     i = i + 1
                 else:
                     pass
-            instance.username = first_name + str(i)
+            if i==0:
+                instance.username = newFirstName
+            else:
+                instance.username = newFirstName + str(i)
             instance.save()
-            return HttpResponse("You are registered with username: "+first_name+str(i)+". Click <a href='/login'>here</a> to login")
+            return HttpResponse("You are registered. Click <a href='/login'>here</a> to login")
         else:
             return redirect("signup")
 
