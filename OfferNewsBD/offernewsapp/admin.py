@@ -48,7 +48,7 @@ admin.site.register(Category, CategoryModel)
 
 
 class CouponModel(admin.ModelAdmin):
-    list_display = ["__str__"]
+    list_display = ["__str__","postId"]
     search_fields = ["__str__"]
 
     class Meta:
@@ -59,7 +59,7 @@ admin.site.register(Coupon, CouponModel)
 
 
 class PostModel(admin.ModelAdmin):
-    list_display = ["__str__", "postedOn", "comName", "category", "offerType", "isActive", "expiredOn",]
+    list_display = ["__str__", "postedOn", "comName","author", "category", "offerType", "isActive", "expiredOn",]
     search_fields = ["__str__"]
     list_filter = ["postedOn", "category"]
     list_per_page = 30

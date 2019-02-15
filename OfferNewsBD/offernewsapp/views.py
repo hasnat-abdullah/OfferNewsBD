@@ -3,7 +3,7 @@ from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, F
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from .forms import ContactForm, SignUpForm, PostForm
+from .forms import ContactForm, SignUpForm, PostForm, CouponForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.urls import resolve
@@ -135,17 +135,23 @@ def getstore(request):
 
 def getsubmition(request):
     if request.user.is_authenticated:
-        getUser = name = request.user.id
+        u=get_object_or_404(User, id=request.user.is_authenticated)
         form = PostForm(request.POST or None, request.FILES or None)
+        formCoupon = CouponForm(request.POST or None)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.author = getUser
+            instance.author=u
             instance.save()
+            if formCoupon.is_valid():
+                instance2 = formCoupon.save(commit=False)
+                instance2.postId=get_object_or_404(Post,id=instance.id)
+                instance2.save()
+            else:
+                pass
             return redirect('index')
-        return render(request, "submit-coupon.html", {"form": form})
+        return render(request, "submit-coupon.html", {"form": form, "formCoupon": formCoupon,})
     else:
-        return redirect('login')
-
+        return redirect('index')
 
 # Login Function
 def getsignin(request):

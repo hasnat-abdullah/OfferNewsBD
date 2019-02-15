@@ -99,6 +99,7 @@ class Post(models.Model):
     expiredOn = models.DateField()
     editedOn = models.DateTimeField(auto_now=True, auto_now_add=False)
     # slug = models.SlugField(max_length=80, unique=True, blank=False)
+    branch = models.ForeignKey(Branch, on_delete=None)
 
     def __str__(self):
         return self.title
