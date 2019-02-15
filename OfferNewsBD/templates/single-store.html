@@ -63,9 +63,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
+                    {% for p in post %}
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <!-- Deal Single Item Start -->
-                            {% for p in post %}
+
                             <div class="item deal-item">
                                 <div class="deal-thumb">
                                 <!-- Query for choosing right single page dea or coupon -->
@@ -106,9 +107,10 @@
                                     </div>
                                 </div>
                             </div>
-                            {%  endfor %}
+
                             <!-- Deal Single Item End -->
                         </div>
+                    {%  endfor %}
                     </div>
 
                     <div class="row">

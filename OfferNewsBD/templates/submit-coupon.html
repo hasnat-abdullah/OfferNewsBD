@@ -24,7 +24,89 @@
                                         <form action="" method="POST" enctype="multipart/form-data">
                                             {% csrf_token %}
 
-                                            {{ form.as_p }}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    {{ form.comName }}
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    {{ form.branch }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    {{ form.category }}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{ form.offerType }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    {{ form.AmountType }}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{ form.Amount }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    {{ form.postImage }}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{ formCoupon.couponCode }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    {{ form.expiredOn }}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    {{ form.goingUrl }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {{ form.title }}
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {{ form.description }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="checkbox checkbox-primary">
+                                                        {{ form.isFeatured }}
+                                                        <label for="isFeature">
+                                                            Feature This Offer <a class="modalAnchor" type="button" data-toggle="modal" data-target="#featureInfo"><i class="fa fa-question-circle"></i></a>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="featureProperty" style="display: none;">
+                                                    <div class="col-md-6">
+                                                        {{ formFeature.featuredExpireDate }}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        {{ formFeature.position }}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" name="feature_price" value="0Tk" class="form-control" required disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="checkbox checkbox-primary">
+                                                        <input id="acceptTerms" type="checkbox">
+                                                        <label for="acceptTerms">
+                                                            Accept
+                                                        </label>
+                                                        <a target="_blank" href="/Terms/">Terms &amp; Condition</a>
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
 {#                                            <div class="row">#}

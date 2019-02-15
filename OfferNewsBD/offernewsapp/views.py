@@ -3,7 +3,7 @@ from .models import Profile, Company, Branch, Category, Post, Coupon, Contact, F
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from .forms import ContactForm, SignUpForm, PostForm, CouponForm
+from .forms import ContactForm, SignUpForm, PostForm, CouponForm, FeaturedPostForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.urls import resolve
@@ -94,12 +94,12 @@ def getcontact(request):
 
 def getsinglecoupon(request, id):
     coupon = get_object_or_404(Post, pk=id)
-    code=Coupon.objects.filter(postId=coupon.id)
+    code=Coupon.objects.get(postId=coupon.id)
     related = Post.objects.filter(category=coupon.category).exclude(id=id)[:4]
     context = {
         'coupon': coupon,
         'related': related,
-        'Code': code,
+        'code': code,
     }
     return render(request, "single-coupon-code.html", context)
 
@@ -138,6 +138,7 @@ def getsubmition(request):
         u=get_object_or_404(User, id=request.user.is_authenticated)
         form = PostForm(request.POST or None, request.FILES or None)
         formCoupon = CouponForm(request.POST or None)
+        formFeature = FeaturedPostForm(request.POST or None)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.author=u
@@ -146,12 +147,14 @@ def getsubmition(request):
                 instance2 = formCoupon.save(commit=False)
                 instance2.postId=get_object_or_404(Post,id=instance.id)
                 instance2.save()
-            else:
-                pass
+            if formFeature.is_valid():
+                instance3 = formFeature.save(commit=False)
+                instance3.postId=get_object_or_404(Post,id=instance.id)
+                instance3.save()
             return redirect('index')
-        return render(request, "submit-coupon.html", {"form": form, "formCoupon": formCoupon,})
+        return render(request, "submit-coupon.html", {"form": form, "formCoupon": formCoupon,"formFeature":formFeature})
     else:
-        return redirect('index')
+        return redirect('login')
 
 # Login Function
 def getsignin(request):

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact, Post, Category, Company,Coupon,Branch
+from .models import Contact, Post, Category, Company,Coupon,Branch,FeaturedPost
 from django.contrib.auth.forms import UserCreationForm  # Form for signup
 from django.contrib.auth.models import User  # Django default user table
 
@@ -21,25 +21,8 @@ class PostForm(forms.ModelForm):
     postImage = forms.ImageField(required=True, label='', widget=forms.ClearableFileInput(attrs={"class": "form-control", "placeholder": "Offer Image*"}))
     expiredOn = forms.DateField(required=True, label='', widget=forms.DateInput(attrs={"style": "margin-bottom: 15px;", "class": "form-control datePickr", "placeholder": "Offer Expiry Date"}))
     goingUrl = forms.URLField(max_length=99, label='', widget=forms.URLInput(attrs={"class": "form-control", "placeholder": "Offer Url",}))
-    isFeatured = forms.BooleanField(required=False,label='', widget=forms.CheckboxInput(attrs={"class": "form-control"}))
+    isFeatured = forms.BooleanField(required=False,label='Feature This Offer', widget=forms.CheckboxInput(attrs={"class": "form-control","id":"isFeature", "name":"isFeature", "type":"checkbox", "onchange":"is_Feature(this)"}))
 
-
-    # def save(self, commit=True):
-    #     post = super(PostForm, self).save(commit=False)
-    #     post.title = self.cleaned_data['title']
-    #     post.description = self.cleaned_data['description']
-    #     post.comName = self.cleaned_data['comName']
-    #     post.category = self.cleaned_data['category']
-    #     post.offerType = self.cleaned_data['offerType']
-    #     post.AmountType = self.cleaned_data['AmountType']
-    #     post.Amount = self.cleaned_data['Amount']
-    #     post.postImage = self.cleaned_data['postImage']
-    #     post.expiredOn = self.cleaned_data['expiredOn']
-    #     post.goingUrl = self.cleaned_data['goingUrl']
-    #     post.isFeatured = self.cleaned_data['isFeatured']
-    #     if commit:
-    #         post.save()
-    #     return post
 
 
 class CouponForm(forms.ModelForm):
@@ -48,6 +31,15 @@ class CouponForm(forms.ModelForm):
     class Meta:
         model = Coupon
         fields = [ 'couponCode',]
+
+
+class FeaturedPostForm(forms.ModelForm):
+    position = forms.ChoiceField(choices=FeaturedPost.Position_Type, widget=forms.Select(attrs={"class": "form-control"}))
+    featuredExpireDate = forms.DateField(required=True, label='', widget=forms.DateInput(attrs={ "class": "form-control datePickr", "placeholder": "Feature Exp Date : dd/mm/yyyy"}))
+
+    class Meta:
+        model = FeaturedPost
+        fields = [ 'position','featuredExpireDate',]
 
 
 class ContactForm(forms.ModelForm):
