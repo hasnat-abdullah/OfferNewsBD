@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import datetime
-
+from django.utils.text import slugify
 
 # Coding By Abdullah on 8/10/2018
 
@@ -29,7 +29,21 @@ class Company (models.Model):
     infoUpdatedOn = models.DateField(auto_now=True, auto_now_add=False)
     createdOn = models.DateField(auto_now=False, auto_now_add=True)
     isVerified = models.BooleanField(blank=False)
-    #slug = models.SlugField(max_length=80, unique=True, blank=False)
+    slug = models.SlugField(max_length=150, unique=True)
+
+    def _get_unique_slug(self):
+        slug = slugify(self.comName)
+        unique_slug = slug
+        num = 1
+        while Company.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.comName
@@ -42,7 +56,22 @@ class Branch(models.Model):
     branchAddress = models.TextField(max_length=200)
     branchPhn = models.CharField(max_length=11)
     comId = models.ForeignKey(Company, on_delete=models.CASCADE)
-    #slug = models.SlugField(max_length=80, unique=True, blank=False, default=True)
+    slug = models.SlugField(max_length=150, unique=True)
+
+    def _get_unique_slug(self):
+        slug = slugify(self.branchName)
+        unique_slug = slug
+        num = 1
+        while Branch.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.branchName
 
@@ -51,6 +80,11 @@ class Branch(models.Model):
 class Category(models.Model):
     catName = models.CharField(max_length=20)
     catIcon = models.FileField(default='default.jpg', upload_to='cat_pics', blank=True)
+    slug = models.SlugField(max_length=150, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.catName, allow_unicode=True)
+        super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.catName
@@ -98,13 +132,25 @@ class Post(models.Model):
     postedOn = models.DateTimeField(auto_now=False, auto_now_add=True)
     expiredOn = models.DateField()
     editedOn = models.DateTimeField(auto_now=True, auto_now_add=False)
-    # slug = models.SlugField(max_length=80, unique=True, blank=False)
+    slug = models.SlugField(max_length=150, unique=True)
     branch = models.ForeignKey(Branch, on_delete=None)
 
     def __str__(self):
         return self.title
 
+    def _get_unique_slug(self):
+        slug = slugify(self.title)
+        unique_slug = slug
+        num = 1
+        while Post.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)
 
 class Coupon(models.Model):
     postId = models.OneToOneField(Post, on_delete=models.CASCADE)
@@ -233,6 +279,21 @@ class ExternalAd(models.Model):
     featuredExpireDate = models.DateField()
     featuredDate = models.DateField(auto_now=False, auto_now_add=True)
     isActive = models.BooleanField(db_index=True, default=True)
+    slug = models.SlugField(max_length=150, unique=True)
+
+    def _get_unique_slug(self):
+        slug = slugify(self.title)
+        unique_slug = slug
+        num = 1
+        while ExternalAd.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -247,6 +308,21 @@ class Meta(models.Model):
     title = models.CharField(max_length=200)
     keyword = models.TextField()
     description = models.TextField()
+    slug = models.SlugField(max_length=150, unique=True)
+
+    def _get_unique_slug(self):
+        slug = slugify(self.title)
+        unique_slug = slug
+        num = 1
+        while Meta.objects.filter(slug=unique_slug).exists():
+            unique_slug = '{}-{}'.format(slug, num)
+            num += 1
+        return unique_slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._get_unique_slug()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

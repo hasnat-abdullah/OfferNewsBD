@@ -80,9 +80,9 @@
                             <!-- Query for choosing right single page dea or coupon -->
                                 <a href="
                                 {% if r.offerType == 'D' %}
-                                    {%  url 'deal' id=r.id %}
+                                    {%  url 'deal' slug=r.slug %}
                                 {% else %}
-                                    {%  url "coupon" id=r.id %}
+                                    {%  url "coupon" slug=r.slug %}
                                 {% endif %}">
                                     <img src="{{ r.postImage.url }}" alt="" class="img-responsive"></a>
                                 <div class="deal-badge">
@@ -98,12 +98,12 @@
                             <div class="deal-content">
                                 <h6><a href="
                                 {% if r.offerType == 'D' %}
-                                    {%  url 'deal' id=r.id %}
+                                    {%  url 'deal' slug=r.slug %}
                                 {% else %}
-                                    {%  url 'coupon' id=r.id %}
+                                    {%  url 'coupon' slug=r.slug %}
                                 {% endif %}">
                                     {{ r.title }} </a></h6>
-                                <p>{{ r.description }}</p>
+                                <p>{{ r.description|truncatechars:30 }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{r.expiredOn}}</p>
                                     <a type="button" data-toggle="modal" data-target="#coupon-code" class="btn btn-sm">Details</a>

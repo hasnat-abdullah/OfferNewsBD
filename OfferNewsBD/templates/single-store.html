@@ -72,9 +72,9 @@
                                 <!-- Query for choosing right single page dea or coupon -->
                                 <a href="
                                 {% if p.offerType == 'D' %}
-                                    {%  url 'deal' id=p.id %}
+                                    {%  url 'deal' slug=p.slug %}
                                 {% else %}
-                                    {%  url "coupon" id=p.id %}
+                                    {%  url "coupon" slug=p.slug %}
                                 {% endif %}">
                                     <img src="{{ p.postImage.url }}" alt="" class="img-responsive"></a>
                                     <div class="deal-badge">
@@ -90,19 +90,19 @@
                                 <div class="deal-content">
                                     <h6><a href="
                                 {% if p.offerType == 'D' %}
-                                    {%  url 'deal' id=p.id %}
+                                    {%  url 'deal' slug=p.slug %}
                                 {% else %}
-                                    {%  url 'coupon' id=p.id %}
+                                    {%  url 'coupon' slug=p.slug %}
                                 {% endif %}">
                                     {{ p.title }} </a></h6>
-                                <p>{{ p.description|truncatechars:60}}</p>
+                                <p>{{ p.description|truncatechars:30}}</p>
                                     <div class="deal-content-bottom">
                                         <p><i class="fa fa-clock-o"></i>Expired: {{p.expiredOn}}</p>
                                         <a href="
                                             {% if p.offerType == 'D' %}
-                                                {%  url 'deal' id=p.id %}
+                                                {%  url 'deal' slug=p.slug %}
                                             {% else %}
-                                                {%  url 'coupon' id=p.id %}
+                                                {%  url 'coupon' slug=p.slug %}
                                             {% endif %}" class="btn btn-sm">Details</a>
                                     </div>
                                 </div>

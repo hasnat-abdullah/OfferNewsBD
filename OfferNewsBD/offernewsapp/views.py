@@ -92,10 +92,10 @@ def getcontact(request):
     return render(request, "contact.html", {"form": form})
 
 
-def getsinglecoupon(request, id):
-    coupon = get_object_or_404(Post, pk=id)
+def getsinglecoupon(request, slug):
+    coupon = get_object_or_404(Post, slug=slug)
     code=Coupon.objects.get(postId=coupon.id)
-    related = Post.objects.filter(category=coupon.category).exclude(id=id)[:4]
+    related = Post.objects.filter(category=coupon.category).exclude(id=coupon.id)[:4]
     context = {
         'coupon': coupon,
         'related': related,
@@ -104,9 +104,9 @@ def getsinglecoupon(request, id):
     return render(request, "single-coupon-code.html", context)
 
 
-def getsingledeal(request, id):
-    deal = get_object_or_404(Post, pk=id)
-    related = Post.objects.filter(category=deal.category).exclude(id=id)[:4]
+def getsingledeal(request, slug):
+    deal = get_object_or_404(Post, slug=slug)
+    related = Post.objects.filter(category=deal.category).exclude(id=deal.id)[:4]
     context = {
         'deal': deal,
         'related': related,
@@ -114,8 +114,8 @@ def getsingledeal(request, id):
     return render(request, "single-coupon-sale.html", context)
 
 
-def getsinglestore(request, id):
-    company=get_object_or_404(Company, pk=id)
+def getsinglestore(request, slug):
+    company=get_object_or_404(Company, slug=slug)
     post=Post.objects.filter(comName=company.id)
 
     #========Paginator==========
