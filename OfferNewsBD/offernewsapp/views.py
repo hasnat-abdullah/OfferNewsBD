@@ -12,7 +12,7 @@ from django.urls import resolve
 # from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
-
+# ==========index Page===========
 def index(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')
     featuredpost = Post.objects.filter(isFeatured=True).order_by('?')
@@ -28,14 +28,20 @@ def index(request):
     }
     return render(request, "index.html", context)
 
-
+# ==========Author Page===========
 def getauthor(request, name):
-    context = {
-        'username': name
-    }
-    return render(request, "dashboard.html", context)
+    if request.user.is_authenticated:
+        u=get_object_or_404(User, id=request.user.id)
+        if u.username==name:
+            context = {
+                'user': u
+            }
+            return render(request, "dashboard.html", context)
+        else:
+            return redirect('category')
+    return redirect('index')
 
-
+# ==========Category page Page===========
 def getcategory(request, name):
     cat = get_object_or_404(Category, catName=name)
     post = Post.objects.filter(category=cat.id)
@@ -45,7 +51,7 @@ def getcategory(request, name):
     }
     return render(request, "category.html", context)
 
-
+# ==========All Offer Page===========
 def getalloffer(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')
     coupon = Post.objects.filter(isActive=True, offerType='C').order_by('-postOn')
@@ -72,11 +78,11 @@ def getalloffer(request):
     }
     return render(request, "category.html", context)
 
-
+# ==========About Us Page===========
 def getaboutus(request):
     return render(request, "about-us.html")
 
-
+# ==========Contact Page===========
 def getcontact(request):
     form = ContactForm(request.POST or None)
     if form.is_valid():
@@ -91,7 +97,7 @@ def getcontact(request):
 
     return render(request, "contact.html", {"form": form})
 
-
+# ==========Single Coupon Page===========
 def getsinglecoupon(request, slug):
     coupon = get_object_or_404(Post, slug=slug)
     code=Coupon.objects.get(postId=coupon.id)
@@ -103,7 +109,7 @@ def getsinglecoupon(request, slug):
     }
     return render(request, "single-coupon-code.html", context)
 
-
+# ==========Single Deal Page===========
 def getsingledeal(request, slug):
     deal = get_object_or_404(Post, slug=slug)
     related = Post.objects.filter(category=deal.category).exclude(id=deal.id)[:4]
@@ -113,7 +119,7 @@ def getsingledeal(request, slug):
     }
     return render(request, "single-coupon-sale.html", context)
 
-
+# ==========Single store Page===========
 def getsinglestore(request, slug):
     company=get_object_or_404(Company, slug=slug)
     post=Post.objects.filter(comName=company.id)
@@ -128,14 +134,14 @@ def getsinglestore(request, slug):
     }
     return render(request, "single-store.html", context)
 
-
+# ==========All Store Page===========
 def getstore(request):
     return render(request, "stores.html")
 
-
+# ==========Offer Submit Page===========
 def getsubmition(request):
     if request.user.is_authenticated:
-        u=get_object_or_404(User, id=request.user.is_authenticated)
+        u=get_object_or_404(User, id=request.user.id)
         form = PostForm(request.POST or None, request.FILES or None)
         formCoupon = CouponForm(request.POST or None)
         formFeature = FeaturedPostForm(request.POST or None)
@@ -156,7 +162,7 @@ def getsubmition(request):
     else:
         return redirect('login')
 
-# Login Function
+# ==========Login Page===========
 def getsignin(request):
     if request.user.is_authenticated:
         return redirect('index')
@@ -173,7 +179,7 @@ def getsignin(request):
 
     return render(request, "signin.html")
 
-
+# ==========Signup Page===========
 def getsignup(request):
     if request.method == "GET":
         form = SignUpForm(request.POST or None)
@@ -202,7 +208,7 @@ def getsignup(request):
         else:
             return redirect("signup")
 
-
+# ==========Logout function===========
 def getlogout(request):
     logout(request)
     return redirect('index')

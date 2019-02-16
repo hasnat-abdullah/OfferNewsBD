@@ -196,6 +196,7 @@
                         </button>
                         <div class="hidden-lg hidden-md hidden-sm pull-right mobile-signin-btn">
                             {%  if request.user.is_authenticated  %}
+                                <a class="btn btn-brand" href="{%  url 'Dashboard' name=request.user.username %}">Dashboard</a>
                                 <a class="btn btn-brand" href="{%  url 'logout' %}">Logout</a>
                             {% else %}
                                 <a class="btn btn-brand" href="{%  url 'login' %}">Login/Signup</a>
@@ -228,6 +229,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right hidden-xs">
                             {%  if request.user.is_authenticated  %}
+                                <li><a class="btn btn-brand" href="{%  url 'Dashboard' name=request.user.username %}">Dashboard</a></li>
                                 <li><a class="btn btn-brand" href="{%  url 'logout' %}">Logout</a></li>
                             {% else %}
                                 <li><a class="btn btn-brand" href="{%  url 'login' %}">Login/Signup</a></li>
@@ -265,11 +267,11 @@
                                 <img src="{% static 'assets/img/logo/logo-light.png' %}" alt="Offer News BD" class="img-responsive">
                             </a>
                         </div>
-                        <p>We coupon so to be  for the us me dose this recept good bad think nice beauti full thanks, moja los, u hungry naki food panda use sultan dine.</p>
+                        <p>Get all Bangladeshi deals and coupons at any time any where. Save Money, Save Time</p>
                         <div class="widget-social">
                             <ul>
                                 <li>
-                                    <a href="#">
+                                    <a href="http://facebook.com/offernewsbd">
                                         <i class="fa fa-facebook"></i>
                                     </a>
                                 </li>
