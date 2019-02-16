@@ -42,20 +42,32 @@ def getauthor(request, name):
     return redirect('index')
 
 # ==========Category page Page===========
-def getcategory(request, name):
-    cat = get_object_or_404(Category, catName=name)
-    post = Post.objects.filter(category=cat.id)
+def getcategory(request, slug):
+    cat = Category.objects.all()
+    getCat=get_object_or_404(Category, slug=slug)
+    post = Post.objects.filter(category=getCat.id,isActive=True).order_by('-postedOn')
+    coupon = Post.objects.filter(isActive=True, offerType='C')
+    deal = Post.objects.filter(isActive=True, offerType='D')
+
+    # ==========Paginator==========
+    paginator = Paginator(post, 15)  # Show 15 contacts per page
+
+    page = request.GET.get('page')
+    totalArticle = paginator.get_page(page)
+
     context = {
-        'post': post,
+        'post': totalArticle,
         'cat': cat,
+        'coupon': coupon,
+        'deal': deal,
     }
     return render(request, "category.html", context)
 
 # ==========All Offer Page===========
 def getalloffer(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')
-    coupon = Post.objects.filter(isActive=True, offerType='C').order_by('-postOn')
-    deal = Post.objects.filter(isActive=True, offerType='D').order_by('-postOn')
+    coupon = Post.objects.filter(isActive=True, offerType='C').order_by('-postedOn')
+    deal = Post.objects.filter(isActive=True, offerType='D').order_by('-postedOn')
     cat = Category.objects.all()
     # ==========Search==========
     search = request.GET.get('q')

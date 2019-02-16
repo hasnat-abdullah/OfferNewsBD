@@ -21,7 +21,7 @@
                             <ul>
                                 {% for c in cat %}
                                 <li>
-                                    <a href="#">
+                                    <a href="{%  url 'category' slug=c.slug %}">
                                         <div class="category-thumb">
                                             <img src="{{ c.catIcon.url }}" alt="" class="">
                                         </div>
