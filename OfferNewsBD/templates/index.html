@@ -401,7 +401,7 @@
             {% for s in store %}
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="single-top-store">
-                    <a href="{%  url 'singleStore' slug=s.slug %}"><img src="{{ s.comImage.url }}" alt="Top Store" class="img-responsive"></a>
+                    <a href="{%  url 'singleStore' slug=s.comId.slug %}"><img src="{{ s.comId.comImage.url }}" alt="Top Store" class="img-responsive"></a>
                 </div>
             </div>
             {%  endfor %}

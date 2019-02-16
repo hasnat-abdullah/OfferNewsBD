@@ -18,7 +18,7 @@ def index(request):
     featuredpost = Post.objects.filter(isFeatured=True).order_by('?')
     coverPost=FeaturedPost.objects.filter(isActive=True, position='Cover Big').prefetch_related('postId').order_by('?')[:3]
     coverSmallPost = FeaturedPost.objects.filter(isActive=True, position='Cover Small').prefetch_related('postId').order_by('?')[:2]
-    store = Company.objects.all().order_by('-createdOn')
+    store = FeaturedCom.objects.filter(isActive=True,position='First Page').prefetch_related('comId').order_by('?')
     context = {
         'post': post,
         'store': store,
@@ -122,7 +122,7 @@ def getsingledeal(request, slug):
 # ==========Single store Page===========
 def getsinglestore(request, slug):
     company=get_object_or_404(Company, slug=slug)
-    post=Post.objects.filter(comName=company.id)
+    post=Post.objects.filter(comName=company.id).order_by('-postedOn')
 
     #========Paginator==========
     paginator = Paginator(post, 8)  # Show 8 contacts per page
@@ -136,7 +136,22 @@ def getsinglestore(request, slug):
 
 # ==========All Store Page===========
 def getstore(request):
-    return render(request, "stores.html")
+    store = Company.objects.all().order_by('-createdOn')
+    featuredStore = FeaturedCom.objects.filter(isActive=True).prefetch_related('comId').order_by('?')
+    # featuredStoreFirstPage=featuredStore.filter(position='First Page')[:4]
+    featuredStoreComPage = featuredStore.filter(position='Company Page')[:4]
+
+    # ==========Paginator==========
+    paginator = Paginator(store, 12)  # Show 15 contacts per page
+
+    page = request.GET.get('page')
+    totalArticle = paginator.get_page(page)
+    context = {
+        'store': store,
+        'featuredStore': featuredStore,
+        'featuredStoreComPage': featuredStoreComPage,
+    }
+    return render(request, "stores.html",context)
 
 # ==========Offer Submit Page===========
 def getsubmition(request):

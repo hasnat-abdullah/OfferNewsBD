@@ -13,9 +13,9 @@ urlpatterns = [
     path('contact/', views.getcontact, name="contact"),
     path('store/', views.getstore, name="store"),
     path('offer_form/', views.getsubmition, name="offer_form"),
-    path('deal/<slug>', views.getsingledeal, name="deal"),
-    path('coupon/<slug>', views.getsinglecoupon, name="coupon"),
+    path('deal/<slug:slug>', views.getsingledeal, name="deal"),
+    path('coupon/<slug:slug>', views.getsinglecoupon, name="coupon"),
     #path('<name>', views.getcategory, name="category"),
     path('offer/', views.getalloffer, name="offer"),
-    path('store/<slug>', views.getsinglestore, name="singleStore"),
+    path('store/<slug:slug>', views.getsinglestore, name="singleStore"),
 ]
