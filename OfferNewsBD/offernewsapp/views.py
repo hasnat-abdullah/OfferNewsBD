@@ -15,7 +15,7 @@ from django.urls import resolve
 # ==========index Page===========
 def index(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')
-    featuredpost = Post.objects.filter(isFeatured=True).order_by('?')
+    featuredpost = post.filter(isFeatured=True).order_by('?')
     coverPost=FeaturedPost.objects.filter(isActive=True, position='Cover Big').prefetch_related('postId').order_by('?')[:3]
     coverSmallPost = FeaturedPost.objects.filter(isActive=True, position='Cover Small').prefetch_related('postId').order_by('?')[:2]
     store = FeaturedCom.objects.filter(isActive=True,position='First Page').prefetch_related('comId').order_by('?')[:4]
@@ -46,8 +46,8 @@ def getcategory(request, slug):
     cat = Category.objects.all()
     getCat=get_object_or_404(Category, slug=slug)
     post = Post.objects.filter(category=getCat.id,isActive=True).order_by('-postedOn')
-    coupon = Post.objects.filter(isActive=True, offerType='C')
-    deal = Post.objects.filter(isActive=True, offerType='D')
+    coupon = post.filter(isActive=True, offerType='C')
+    deal = post.filter(isActive=True, offerType='D')
 
     # ==========Paginator==========
     paginator = Paginator(post, 15)  # Show 15 contacts per page
@@ -66,8 +66,8 @@ def getcategory(request, slug):
 # ==========All Offer Page===========
 def getalloffer(request):
     post = Post.objects.filter(isActive=True).order_by('-postedOn')
-    coupon = Post.objects.filter(isActive=True, offerType='C').order_by('-postedOn')
-    deal = Post.objects.filter(isActive=True, offerType='D').order_by('-postedOn')
+    coupon = post.filter( offerType='C')
+    deal = post.filter( offerType='D')
     cat = Category.objects.all()
     # ==========Search==========
     search = request.GET.get('q')
