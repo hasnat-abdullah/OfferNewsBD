@@ -149,7 +149,7 @@
                                     {%  url 'coupon' slug=f.slug %}
                                 {% endif %}">
                                     {{ f.title }} </a></h6>
-                                <p>{{ f.description|truncatechars:60 }}</p>
+                                <p>{{ f.description|truncatechars:30 }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{f.expiredOn}}</p>
                                     <a type="button" href="
@@ -225,7 +225,7 @@
                                     {%  url 'coupon' slug=n.slug %}
                                 {% endif %}">
                                     {{ n.title }} </a></h6>
-                                <p>{{ n.description|truncatechars:60}}</p>
+                                <p>{{ n.description|truncatechars:30}}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{n.expiredOn}}</p>
                                     <a type="button" href="
@@ -301,7 +301,7 @@
                                     {%  url 'coupon' slug=p.slug %}
                                 {% endif %}">
                                     {{ p.title }} </a></h6>
-                                <p>{{ p.description|truncatechars:60 }}</p>
+                                <p>{{ p.description|truncatechars:30 }}</p>
                                 <div class="deal-content-bottom">
                                     <p><i class="fa fa-clock-o"></i> Expired: {{p.expiredOn}}</p>
                                     <a type="button" href="

@@ -18,4 +18,9 @@ urlpatterns = [
     path('category/<slug:slug>', views.getcategory, name="category"),
     path('offer/', views.getalloffer, name="offer"),
     path('store/<slug:slug>', views.getsinglestore, name="singleStore"),
+    path('ajx_profile_info/', views.ajxuserinfo, name="ajx_user_profile_info"),
+    path('ajx_user_edit_profile/', views.ajxusereditprofile, name="ajx_user_edit_profile"),
+    path('ajx_user_offer_info/', views.ajxuserofferinfo, name="ajx_user_offer_info"),
+    path('ajx_user_sponsor_info/', views.ajxusersponsorinfo, name="ajx_user_sponsor_info"),
+    path('ajx_user_company_info/', views.ajxusercompanyinfo, name="ajx_user_company_info"),
 ]

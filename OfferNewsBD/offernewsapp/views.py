@@ -28,6 +28,37 @@ def index(request):
     }
     return render(request, "index.html", context)
 
+# ==========User Info AJX===========
+def ajxuserinfo(request):
+    if request.user.is_authenticated:
+        return render(request, "ajx-user-info.html")
+    return redirect('login')
+
+# ==========User Info Edit AJX===========
+def ajxusereditprofile(request):
+    if request.user.is_authenticated:
+        form = SignUpForm(request.POST or None)
+        return render(request, "ajx-user-edit-profile.html", {"form": form})
+    return redirect('login')
+
+# ==========User Companies Info AJX===========
+def ajxusercompanyinfo(request):
+    if request.user.is_authenticated:
+        return render(request, "ajx-user-company-info.html")
+    return redirect('login')
+
+# ==========User Offers Info AJX===========
+def ajxuserofferinfo(request):
+    if request.user.is_authenticated:
+        return render(request, "ajx-user-offer-info.html")
+    return redirect('login')
+
+# ==========User Sponsors Info AJX===========
+def ajxusersponsorinfo(request):
+    if request.user.is_authenticated:
+        return render(request, "ajx-user-sponsor-info.html")
+    return redirect('login')
+
 # ==========Author Page===========
 def getauthor(request, name):
     if request.user.is_authenticated:

@@ -5,10 +5,6 @@ from django.contrib.auth.models import User  # Django default user table
 
 #-----------Post Ad-----------
 class PostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ['title', 'description', 'comName', 'branch', 'category', 'offerType', 'AmountType', 'Amount', 'postImage', 'isFeatured', 'goingUrl', 'expiredOn',]
-
 
     title = forms.CharField(required=True, max_length=40, label='',widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Title*"}))
     description = forms.CharField(required=True, max_length=200, label='', widget=forms.Textarea(attrs={"class": "form-control", "placeholder": "Description*"}))
@@ -22,6 +18,10 @@ class PostForm(forms.ModelForm):
     expiredOn = forms.DateField(required=True, label='', widget=forms.DateInput(attrs={"style": "margin-bottom: 15px;", "class": "form-control datePickr", "placeholder": "Offer Expiry Date"}))
     goingUrl = forms.URLField(max_length=99, label='', widget=forms.URLInput(attrs={"class": "form-control", "placeholder": "Offer Url",}))
     isFeatured = forms.BooleanField(required=False,label='Feature This Offer', widget=forms.CheckboxInput(attrs={"class": "form-control","id":"isFeature", "name":"isFeature", "type":"checkbox", "onchange":"is_Feature(this)"}))
+
+    class Meta:
+        model = Post
+        fields = ['title', 'description', 'comName', 'branch', 'category', 'offerType', 'AmountType', 'Amount', 'postImage', 'isFeatured', 'goingUrl', 'expiredOn',]
 
 
 
