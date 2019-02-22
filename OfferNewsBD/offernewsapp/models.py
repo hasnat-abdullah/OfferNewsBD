@@ -92,8 +92,8 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    DEAL = 'D'
-    COUPON = 'C'
+    DEAL = 0
+    COUPON = 1
     PERCENTAGE = 'P'
     TAKA = 'T'
     GIFT = 'G'
@@ -197,9 +197,9 @@ class ComFeaturePricing(models.Model):
 
 
 class FeaturedPost(models.Model):
-    COVER_BIG = 'Cover Big'
-    COVER_SMALL = 'Cover Small'
-    FIRST_PAGE = 'First Page'
+    COVER_BIG = 2
+    COVER_SMALL = 1
+    FIRST_PAGE = 0
 
     Position_Type = (
         (COVER_BIG, 'Cover_Big'),

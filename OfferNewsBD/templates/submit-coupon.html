@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="post-comment-form-group">
-                                        <form action="" method="POST" enctype="multipart/form-data">
+                                        <form action="#" method="POST" enctype="multipart/form-data">
                                             {% csrf_token %}
 
                                             <div class="row">
@@ -94,12 +94,12 @@
                                                         {{ formFeature.position }}
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <input type="text" name="feature_price" value="0Tk" class="form-control" required disabled>
+                                                        <input type="text" name="feature_price" value="30Tk" class="form-control" id="feature_price" required disabled>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="checkbox checkbox-primary">
-                                                        <input id="acceptTerms" type="checkbox">
+                                                        <input id="acceptTerms" type="checkbox" required>
                                                         <label for="acceptTerms">
                                                             Accept
                                                         </label>
@@ -199,6 +199,62 @@
 {% block script %}
 
     <script>
+
+        $(document).ready(function () {
+
+            var item = $('#id_couponCode');
+
+            item.attr('disabled', 'disabled');
+            item.removeAttr('required');
+
+            $('#id_offerType').change(function () {
+
+                var value = $('#id_offerType').val();
+                console.log(value);
+
+                if(value == 1) {
+
+                    item.removeAttr('disabled');
+                    item.attr('required', 'required');
+                }
+                else {
+
+                    item.attr('disabled', 'disabled');
+                    item.removeAttr('required');
+                }
+            });
+
+            $('#id_featuredExpireDate').removeAttr('required');
+        });
+
+        $('#id_position').change(function () {
+
+            var value = $(this).val();
+            value = parseInt(value);
+            console.log(value);
+
+            var price = 0;
+
+            switch (value) {
+
+                case 0:
+                    price = 10;
+                    break;
+                case 1:
+                    price = 20;
+                    break;
+                case 3:
+                    price = 30;
+                    break;
+                default:
+                    price = 0;
+                    break;
+            }
+
+            $('#feature_price').val(price+"Tk");
+        });
+
+
         function is_Feature(obj) {
 
             var item = $(obj).parent('.checkbox');
@@ -210,6 +266,7 @@
                 $('.featureProperty').show();
 
                 item.css('margin-top', '10px');
+                $('#id_featuredExpireDate').attr('required', 'required');
             }
             else {
 
@@ -217,6 +274,7 @@
                 $('.featureProperty').hide();
 
                 item.css('margin-top', '0px');
+                $('#id_featuredExpireDate').removeAttr('required');
             }
         }
     </script>
