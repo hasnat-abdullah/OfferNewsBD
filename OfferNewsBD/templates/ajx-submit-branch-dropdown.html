@@ -1,0 +1,6 @@
+<div class="col-md-6">
+    <option value="">Select Branch*</option>
+    {% for i in branch %}
+        <option value="{{ i.pk }}">{{ i.branchName }}</option>
+    {% endfor %}
+</div>

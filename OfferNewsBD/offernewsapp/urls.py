@@ -23,4 +23,5 @@ urlpatterns = [
     path('ajx_user_offer_info/', views.ajxuserofferinfo, name="ajx_user_offer_info"),
     path('ajx_user_sponsor_info/', views.ajxusersponsorinfo, name="ajx_user_sponsor_info"),
     path('ajx_user_company_info/', views.ajxusercompanyinfo, name="ajx_user_company_info"),
+    path('ajx_submit_branch_dropdown/', views.load_branch, name="ajx_submit_branch_dropdown"),
 ]

@@ -193,16 +193,23 @@ def getstore(request):
     }
     return render(request, "stores.html",context)
 
+# ==========Offer Submit Branch dropdown AJX===========
+def load_branch(request):
+    comId = int(request.GET.get('comName'))
+    branch = Branch.objects.filter(comId=comId).order_by('branchName')
+    return render(request, 'ajx-submit-branch-dropdown.html', {'branch': branch})
+
 # ==========Offer Submit Page===========
 def getsubmition(request):
     if request.user.is_authenticated:
         u=get_object_or_404(User, id=request.user.id)
-        form = PostForm(request.POST or None, request.FILES or None)
+        form = PostForm(request.user, request.POST or None, request.FILES or None)
         formCoupon = CouponForm(request.POST or None)
         formFeature = FeaturedPostForm(request.POST or None)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.author=u
+            instance.branch== request.POST.get('branch')
             instance.save()
             if formCoupon.is_valid():
                 instance2 = formCoupon.save(commit=False)

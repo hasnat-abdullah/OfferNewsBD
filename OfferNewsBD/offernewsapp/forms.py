@@ -23,6 +23,18 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'description', 'comName', 'branch', 'category', 'offerType', 'AmountType', 'Amount', 'postImage', 'isFeatured', 'goingUrl', 'expiredOn',]
 
+    # ===========Initial Company name for user & Branch null==========
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['comName'].queryset = Company.objects.filter(author=user)
+        self.fields['branch'].queryset = Branch.objects.none()
+
+        #===========Ajax Dependent branch load after Company select==========
+        if 'comName' in self.data:
+            comId = int(self.data.get('comName'))
+            self.fields['branch'].queryset = Branch.objects.filter(comId=comId).order_by('branchName')
+        elif self.instance.pk:
+            self.fields['branch'].queryset = self.instance.comName.branch_set.order_by('branchName')
 
 
 class CouponForm(forms.ModelForm):
